@@ -46,7 +46,7 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-essential",
+      "plugin:vue/essential",
       "eslint:recommended",
       "@vue/typescript/recommended",
       "plugin:prettier/recommended"
@@ -54,7 +54,9 @@
     "parserOptions": {
       "ecmaVersion": 2020
     },
-    "rules": {},
+    "rules": {
+      "vue/no-multiple-template-root": "off"
+  },
     "overrides": [
       {
         "files": [
