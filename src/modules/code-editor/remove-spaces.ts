@@ -1,6 +1,6 @@
 export function removeWhiteSpaces(code: string): string {
-    const res = code.replace(/[\s\n\t\r\0]/gm, '')
-    console.log(res)
-    console.log(code)
-    return res
+    // https://regex101.com/r/tUpuTr/1
+    const res = code.replace(/[\n\t\r\0]|\s\s+/gm, '')
+    navigator.clipboard.writeText(res.trim()).then((res) => res)
+    return res.trim()
 }

@@ -5,7 +5,7 @@
             class="snippet-textarea"
             rows="6"
             cols=""
-            v-model="snippetPasted"
+            v-model="editableCode"
             placeholder="Paste code here..."
         ></textarea>
         <div class="language-selector">
@@ -28,7 +28,7 @@
         <h1>{{ selectedLanguage }}</h1>
         <div className="Code">
             <pre :class="`language-${selectedLanguage}`">
-                <code :class="`language-${selectedLanguage}`" v-html="setCode(snippetPasted)" ref="editableCode"></code>
+                <code :class="`language-${selectedLanguage}`" v-html="codeContent"></code>
             </pre>
         </div>
         <button @click="removeSpaces()">Remover espaços</button>
@@ -37,25 +37,20 @@
 
 <script setup lang="ts">
 import highlightedCodeElement from '@/modules/syntax-highlighter/syntax-highlighter'
-import { defineProps, ref, watch } from 'vue'
+import { defineProps, ref, computed } from 'vue'
 import languages from '../modules/syntax-highlighter/languages'
 import { removeWhiteSpaces } from '../modules/code-editor/remove-spaces'
 
 const props = defineProps({ msg: String })
 
-let snippetPasted = ref<string>('')
-let editableCode = ref<string>('')
 let selectedLanguage = ref<keyof typeof languages>('text')
+let editableCode = ref<string>(
+    highlightedCodeElement('', selectedLanguage.value)
+)
 
-watch(editableCode, () => {
-    console.log(editableCode)
+const codeContent = computed(() => {
+    return highlightedCodeElement(editableCode.value, selectedLanguage.value)
 })
-
-function setCode(codeToEdit: string) {
-    if (selectedLanguage === undefined)
-        return new Error('code to formmated HTML')
-    return highlightedCodeElement(codeToEdit, selectedLanguage.value)
-}
 
 function getLanguageName(languageName: string) {
     const res = Object.entries(languages).find(
@@ -66,7 +61,7 @@ function getLanguageName(languageName: string) {
 }
 
 function removeSpaces() {
-    editableCode.value = removeWhiteSpaces(snippetPasted.value)
+    editableCode.value = removeWhiteSpaces(editableCode.value)
 }
 </script>
 
