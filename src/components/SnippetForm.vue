@@ -1,72 +1,33 @@
 <template>
     <div class="hello">
         <h1>{{ props.msg }}</h1>
-        <textarea
-            class="snippet-textarea"
-            rows="6"
-            cols=""
-            v-model="editableCode"
-            placeholder="Paste code here..."
-        ></textarea>
-        <div class="language-selector">
-            <select
-                name="language-selector-list"
-                id="language-selector-list"
-                class="language-selector__list"
-                v-model="selectedLanguage"
-            >
-                <option
-                    class="language-selector__option"
-                    v-for="(languageName, index) in languages"
-                    :key="index"
-                    :value="getLanguageName(languageName)"
-                >
-                    {{ languageName }}
-                </option>
-            </select>
-        </div>
-        <h1>{{ selectedLanguage }}</h1>
-        <div className="Code">
-            <pre :class="`language-${selectedLanguage}`">
-                <code :class="`language-${selectedLanguage}`" v-html="codeContent"></code>
-            </pre>
-        </div>
-        <button @click="removeSpaces()">Remover espaços</button>
+        <SnippetTextarea />
+        <LanguageSelector />
+        <RenderizedSnippet />
     </div>
 </template>
 
 <script setup lang="ts">
-import highlightedCodeElement from '@/modules/syntax-highlighter/syntax-highlighter'
-import { defineProps, ref, computed } from 'vue'
+import { defineProps, ref, inject, provide } from 'vue'
 import languages from '../modules/syntax-highlighter/languages'
-import { removeWhiteSpaces } from '../modules/code-editor/remove-spaces'
+import LanguageSelector from './LanguageSelector.vue'
+import SnippetTextarea from './SnippetTextarea.vue'
+import RenderizedSnippet from './RenderizedSnippet.vue'
 
 const props = defineProps({ msg: String })
 
+const editableCode = inject('editable-code') as string
+
 let selectedLanguage = ref<keyof typeof languages>('text')
-let editableCode = ref<string>(
-    highlightedCodeElement('', selectedLanguage.value)
-)
 
-const codeContent = computed(() => {
-    return highlightedCodeElement(editableCode.value, selectedLanguage.value)
-})
-
-function getLanguageName(languageName: string) {
-    const res = Object.entries(languages).find(
-        (lang) => lang[1] === languageName
-    )
-    if (res === undefined) return new Error('language name on list')
-    return res[0]
-}
-
-function removeSpaces() {
-    editableCode.value = removeWhiteSpaces(editableCode.value)
-}
+provide('selected-language', selectedLanguage.value)
+provide('editable-code', editableCode)
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+@import '../assets/css/colors';
+
 h3 {
     margin: 40px 0 0;
 }
@@ -81,8 +42,29 @@ li {
 a {
     color: #42b983;
 }
-.snippet-textarea {
-    border: 1px solid #888;
-    width: clamp(60%, 50%, 90%);
+
+.language-selector {
+    padding-block: 10px;
+
+    &__title {
+        color: $gray;
+    }
+}
+
+.filter-btn {
+    margin-block: 20px;
+}
+
+select#language-selector-list {
+    width: 200px;
+    background-color: inherit;
+    padding: 5px 9px 5px 0;
+    border: 1px solid $gray;
+    border-radius: 5px;
+    color: $light-gray;
+}
+
+select > * {
+    background-color: inherit;
 }
 </style>
