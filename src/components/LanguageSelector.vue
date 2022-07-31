@@ -20,12 +20,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide } from 'vue'
+import { ref, watch } from 'vue'
 import languages from '@/modules/syntax-highlighter/languages'
-
+import { snippetStore } from '@/store/snippet'
+const store = snippetStore()
 let selectedLanguage = ref<keyof typeof languages>('text')
 
-provide('selected-language', selectedLanguage.value)
+watch(selectedLanguage, () => {
+    store.language = selectedLanguage.value
+})
 
 function getLanguageName(languageName: string) {
     const res = Object.entries(languages).find(

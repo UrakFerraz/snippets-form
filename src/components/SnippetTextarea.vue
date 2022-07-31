@@ -3,17 +3,19 @@
         class="snippet-textarea"
         rows="6"
         cols="1"
-        v-model.trim="editableCode"
+        v-model="editableCode"
         placeholder="Paste code here..."
     ></textarea>
 </template>
 
 <script setup lang="ts">
-import { ref, provide } from 'vue'
-
+import { ref, watch } from 'vue'
+import { snippetStore } from '@/store/snippet'
+const store = snippetStore()
 let editableCode = ref<string>('')
-
-provide('editable-code', editableCode.value)
+watch(editableCode, () => {
+    store.snippet = editableCode.value
+})
 </script>
 
 <style scoped lang="scss">

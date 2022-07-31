@@ -5,7 +5,7 @@
         </button>
         <div className="Code">
             <pre
-                :class="`language-${selectedLanguage}`"
+                :class="`language-${language}`"
                 v-html="codeContentToHTML"
             ></pre>
         </div>
@@ -15,14 +15,15 @@
 <script setup lang="ts">
 import { removeWhiteSpaces } from '@/modules/code-editor/remove-spaces'
 import highlightedCodeElement from '@/modules/syntax-highlighter/syntax-highlighter'
-import { inject, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
+import { snippetStore } from '@/store/snippet'
+import { storeToRefs } from 'pinia'
 
-const selectedLanguage = inject('selected-language') as string
+const store = snippetStore()
+const { snippet, language } = storeToRefs(store)
 const removeSpacesFilter = ref<boolean>(false)
-const editableCode = inject('editable-code') as string
 const codeContentToHTML = computed(() => {
-    console.log(removeSpacesFilter.value)
-    const content = highlightedCodeElement(editableCode, selectedLanguage)
+    const content = highlightedCodeElement(snippet.value, language.value)
     if (removeSpacesFilter.value) {
         return removeWhiteSpaces(content)
     }
@@ -30,6 +31,8 @@ const codeContentToHTML = computed(() => {
 })
 
 function removeSpaces() {
+    console.log('dffd', language)
+
     removeSpacesFilter.value = true
 }
 </script>

@@ -8,20 +8,16 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, inject, provide } from 'vue'
+import { defineProps, ref, provide } from 'vue'
 import languages from '../modules/syntax-highlighter/languages'
 import LanguageSelector from './LanguageSelector.vue'
 import SnippetTextarea from './SnippetTextarea.vue'
 import RenderizedSnippet from './RenderizedSnippet.vue'
 
 const props = defineProps({ msg: String })
-
-const editableCode = inject('editable-code') as string
-
-let selectedLanguage = ref<keyof typeof languages>('text')
+const selectedLanguage = ref<keyof typeof languages>('text')
 
 provide('selected-language', selectedLanguage.value)
-provide('editable-code', editableCode)
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
