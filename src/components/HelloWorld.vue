@@ -2,8 +2,7 @@
     <div class="hello">
         <h1>{{ msg }}</h1>
         <p>
-            For a guide and recipes on how to configure / customize this
-            project,<br />
+            Snippet Editor created with Vue.js + TypeScript,<br />
             check out the
             <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
                 >vue-cli documentation</a
@@ -60,7 +59,7 @@
                 >
             </li>
         </ul>
-        <h3>Essential Links</h3>
+        <h3>Essential Links To VueJS</h3>
         <ul>
             <li>
                 <a href="https://vuejs.org" target="_blank" rel="noopener"
@@ -102,8 +101,11 @@
                 >
             </li>
             <li>
-                <a href="https://vuex.vuejs.org" target="_blank" rel="noopener"
-                    >vuex</a
+                <a
+                    href="https://pinia.vuejs.org/"
+                    target="_blank"
+                    rel="noopener"
+                    >pinia</a
                 >
             </li>
             <li>
@@ -120,14 +122,6 @@
                     target="_blank"
                     rel="noopener"
                     >vue-loader</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://github.com/vuejs/awesome-vue"
-                    target="_blank"
-                    rel="noopener"
-                    >awesome-vue</a
                 >
             </li>
         </ul>
