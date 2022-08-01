@@ -2,6 +2,7 @@
     <div class="actions-form">
         <LanguageSelector />
         <BaseButton :type="'filter'" />
+        <BaseButton :type="'undo'" />
         <BaseButton :type="'copy'" />
     </div>
 </template>
@@ -18,5 +19,6 @@ import BaseButton from './BaseButton.vue'
     align-items: flex-end;
     justify-content: space-evenly;
     gap: 20px;
+    margin-block: 20px;
 }
 </style>

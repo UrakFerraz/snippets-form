@@ -1,7 +1,7 @@
 <template>
     <textarea
         class="snippet-textarea"
-        rows="6"
+        rows="12"
         cols="1"
         v-model="editableCode"
         placeholder="Paste code here..."
@@ -15,6 +15,7 @@ const store = snippetStore()
 let editableCode = ref<string>('')
 watch(editableCode, () => {
     store.snippet = editableCode.value
+    store.edited = editableCode.value
 })
 </script>
 

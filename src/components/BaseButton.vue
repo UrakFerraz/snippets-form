@@ -14,30 +14,34 @@
         >
             Copiar
         </button>
+        <button
+            @click="undoSnippet()"
+            class="filter-btn"
+            v-if="props.type === 'undo'"
+        >
+            Desfazer edição
+        </button>
     </div>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
 import { snippetStore } from '@/store/snippet'
-import { storeToRefs } from 'pinia'
-import { removeWhiteSpaces } from '@/modules/code-editor/remove-spaces'
-import copyToClipboard from '@/modules/code-editor/copy-to-clipboard'
+
 const props = defineProps({ type: String })
 const store = snippetStore()
-const { snippet } = storeToRefs(store)
 
 function removeSpaces() {
-    snippet.value = removeWhiteSpaces(snippet.value)
+    store.removeSpaces()
 }
 
 function copySnippet() {
-    copyToClipboard(snippet.value)
+    store.copySnippet()
+}
+
+function undoSnippet() {
+    store.undoSnippet()
 }
 </script>
 
-<style scoped lang="scss">
-.button-container {
-    margin-block: 10px;
-}
-</style>
+<style scoped lang="scss"></style>

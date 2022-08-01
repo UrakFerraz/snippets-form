@@ -160,7 +160,6 @@ img {
 button,
 input,
 optgroup,
-select,
 textarea {
   font-size: 100%; /* 1 */
   line-height: 1.15; /* 1 */
@@ -182,8 +181,7 @@ input { /* 1 */
  * 1. Remove the inheritance of text transform in Firefox.
  */
 
-button,
-select { /* 1 */
+button { /* 1 */
   text-transform: none;
 }
 

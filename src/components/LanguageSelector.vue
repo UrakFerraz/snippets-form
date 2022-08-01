@@ -1,33 +1,39 @@
 <template>
     <div class="language-selector">
         <p class="language-selector__title">Select language</p>
-        <select
-            name="language-selector-list"
-            id="language-selector-list"
-            class="language-selector__list"
-            v-model="selectedLanguage"
-        >
-            <option
-                class="language-selector__option"
-                v-for="(languageName, index) in languages"
-                :key="index"
-                :value="getLanguageName(languageName)"
-            >
-                {{ languageName }}
-            </option>
-        </select>
+        <div :class="enableSelector">
+            <select id="standard-select" v-model="selectedLanguage">
+                <option
+                    class="language-selector__option"
+                    v-for="(languageName, index) in languages"
+                    :key="index"
+                    :value="getLanguageName(languageName)"
+                >
+                    {{ languageName }}
+                </option>
+            </select>
+            <span class="focus"></span>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import languages from '@/modules/syntax-highlighter/languages'
 import { snippetStore } from '@/store/snippet'
+import { storeToRefs } from 'pinia'
 const store = snippetStore()
+const { snippet } = storeToRefs(store)
 let selectedLanguage = ref<keyof typeof languages>('text')
 
 watch(selectedLanguage, () => {
     store.language = selectedLanguage.value
+})
+
+const enableSelector = computed(() => {
+    return snippet.value !== 'hello world'
+        ? 'select'
+        : 'select select--disabled'
 })
 
 function getLanguageName(languageName: string) {
@@ -42,20 +48,137 @@ function getLanguageName(languageName: string) {
 <style scoped lang="scss">
 @import '../assets/css/colors';
 
-.language-selector {
-    padding-block: 10px;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
 
-    &__title {
-        color: $gray;
+.language-selector__title {
+    color: $light-gray;
+}
+
+select {
+    // A reset of styles, including removing the default dropdown arrow
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    color: $light-gray;
+    // Stack above custom arrow
+    z-index: 1;
+
+    // Remove dropdown arrow in IE10 & IE11
+    // @link https://www.filamentgroup.com/lab/select-css.html
+    &::-ms-expand {
+        display: none;
+    }
+
+    // Remove focus outline, will add on alternate element
+    outline: none;
+}
+
+.select {
+    display: grid;
+    grid-template-areas: 'select';
+    align-items: center;
+    position: relative;
+
+    select,
+    &::after {
+        grid-area: select;
+    }
+
+    min-width: 15ch;
+    max-width: 30ch;
+
+    border: 1px solid $principal;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1.1;
+
+    // Optional styles
+    // remove for transparency
+    background-color: $darkest-color;
+
+    // Custom arrow
+    &:not(.select--multiple)::after {
+        content: '';
+        justify-self: end;
+        width: 0.8em;
+        height: 0.5em;
+        background-color: $dark-color;
+        clip-path: polygon(100% 0%, 0 0%, 50% 100%);
     }
 }
 
-select#language-selector-list {
-    width: 200px;
-    background-color: inherit;
-    padding: 5px 9px 5px 0;
-    border: 1px solid $gray;
-    border-radius: 5px;
-    color: $light-gray;
+// Interim solution until :focus-within has better support
+select:focus + .focus {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border: 2px solid $principal;
+    border-radius: inherit;
+}
+
+select[multiple] {
+    padding-right: 0;
+
+    /*
+   * Safari will not reveal an option
+   * unless the select height has room to
+   * show all of it
+   * Firefox and Chrome allow showing
+   * a partial option
+   */
+    height: 6rem;
+
+    option {
+        white-space: normal;
+
+        // Only affects Chrome
+        outline-color: $light-gray;
+    }
+
+    /*
+   * Experimental - styling of selected options
+   * in the multiselect
+   * Not supported crossbrowser
+   */
+    // &:not(:disabled) option {
+    //     border-radius: 12px;
+    //     transition: 120ms all ease-in;
+
+    //     &:checked {
+    //         background: linear-gradient(hsl(242, 61%, 76%), hsl(242, 61%, 71%));
+    //         padding-left: 0.5em;
+    //         color: black !important;
+    //     }
+    // }
+}
+
+.select--disabled {
+    cursor: not-allowed;
+    background-color: $darkest-color;
+}
+
+label {
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+.select + label {
+    margin-top: 2rem;
 }
 </style>
