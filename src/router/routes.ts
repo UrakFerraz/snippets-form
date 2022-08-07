@@ -21,6 +21,14 @@ const routes: Array<RouteRecordRaw> = [
                 /* webpackChunkName: "snippets-form" */ '../views/SnippetForm.vue'
             ),
     },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: () =>
+            import(
+                /* webpackChunkName: "profile" */ '../views/UserManagement.vue'
+            ),
+    },
 ]
 
 export default routes
