@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps } from 'vue'
+import { ref } from 'vue'
 import Avatar from './TheAvatar.vue'
 import { supabase } from '@/lib/supabaseClient'
 import { Session } from '@supabase/supabase-js'

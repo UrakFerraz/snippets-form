@@ -25,7 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import { snippetStore } from '@/store/snippet'
 
 const props = defineProps({ type: String })

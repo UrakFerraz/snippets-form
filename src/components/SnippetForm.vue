@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import ActionsForm from './ActionsForm.vue'
 import SnippetTextarea from './SnippetTextarea.vue'
 import RenderizedSnippet from './RenderizedSnippet.vue'
