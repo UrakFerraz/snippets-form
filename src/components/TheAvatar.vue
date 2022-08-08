@@ -1,6 +1,6 @@
 <template>
     <img
-        :src="avatarUrl"
+        :src="avatarRendered"
         alt="Avatar"
         class="avatar image"
         style="height: 150px, width: 150px"
@@ -21,22 +21,25 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref, watch } from '@vue/runtime-core'
+import { computed, Ref, ref, watch } from '@vue/runtime-core'
 import { supabase } from '@/lib/supabaseClient'
-
+import { userStore } from '@/store/user'
+const store = userStore()
 const props = defineProps({ url: String })
-
-const emit = defineEmits(['onUpload'])
 
 const avatarUrl: Ref<string | undefined> = ref(undefined)
 const uploading = ref(false)
 
 watch(
-    () => props?.url,
+    () => props.url,
     (cur) => {
         downloadImage(cur)
     }
 )
+
+const avatarRendered = computed(() => {
+    return avatarUrl.value
+})
 
 const downloadImage = async (path: string | undefined) => {
     console.log('download path', path)
@@ -78,8 +81,8 @@ async function uploadAvatar(event: Event) {
         if (uploadError) {
             throw uploadError
         }
-
-        emit('onUpload', filePath)
+        store.setAvatarURL(filePath)
+        console.log(store)
     } catch (e: unknown) {
         if (typeof e === 'string') {
             e.toUpperCase()
