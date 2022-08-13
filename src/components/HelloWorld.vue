@@ -58,6 +58,30 @@
                     >typescript</a
                 >
             </li>
+            <li>
+                <a
+                    href="https://github.com/PrismJS/prism#readme"
+                    target="_blank"
+                    rel="noopener"
+                    >prism js</a
+                >
+            </li>
+            <li>
+                <a
+                    href="https://github.com/vuejs/pinia#readme"
+                    target="_blank"
+                    rel="noopener"
+                    >pinia</a
+                >
+            </li>
+            <li>
+                <a
+                    href="https://github.com/supabase/supabase-js"
+                    target="_blank"
+                    rel="noopener"
+                    >supabase</a
+                >
+            </li>
         </ul>
         <h3>Essential Links To VueJS</h3>
         <ul>
@@ -124,6 +148,14 @@
                     >vue-loader</a
                 >
             </li>
+            <li>
+                <a
+                    href="https://github.com/supabase/supabase-js"
+                    target="_blank"
+                    rel="noopener"
+                    >supabase</a
+                >
+            </li>
         </ul>
     </div>
 </template>
@@ -150,7 +182,7 @@ ul {
 }
 li {
     display: inline-block;
-    margin: 0 10px;
+    margin: 10px;
 }
 a {
     color: #42b983;

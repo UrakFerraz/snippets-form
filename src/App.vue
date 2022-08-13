@@ -25,6 +25,7 @@ nav {
     a {
         font-weight: bold;
         color: $gray;
+        margin: 10px;
 
         &.router-link-exact-active {
             color: #42b983;

@@ -28,6 +28,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
+import { tryCatchError } from '@/modules/ErrorHandler/typeError'
 
 const loading = ref<boolean>(false)
 const email = ref<string>('')
@@ -41,11 +42,7 @@ const handleLogin = async () => {
         if (error) throw error
         alert('Check your email for the login link!')
     } catch (e: unknown) {
-        if (typeof e === 'string') {
-            e.toUpperCase()
-        } else if (e instanceof Error) {
-            e.message
-        }
+        tryCatchError(e)
     } finally {
         loading.value = false
     }

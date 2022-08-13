@@ -1,20 +1,15 @@
 <template>
-    <img
-        :src="avatarRendered"
-        alt="Avatar"
-        class="avatar image"
-        style="height: 150px, width: 150px"
-    />
-    <div style="width: 150px">
+    <img :src="avatarRendered" alt="Avatar" class="avatar-image" />
+    <div class="input-upload">
         <input
-            style="visibility: hidden; position: absolute"
             type="file"
             id="single"
             accept="image/*"
+            class="input-upload__cta"
             @change="uploadAvatar"
             :disabled="uploading"
         />
-        <label class="button primary block" htmlFor="single">
+        <label class="input-upload__label" htmlFor="single">
             <span>{{ uploading ? 'UpLoading...' : 'Upload' }}</span>
         </label>
     </div>
@@ -24,10 +19,14 @@
 import { computed, Ref, ref, watch } from '@vue/runtime-core'
 import { supabase } from '@/lib/supabaseClient'
 import { userStore } from '@/store/user'
+import { tryCatchError } from '@/modules/ErrorHandler/typeError'
+import { supabaseUrl, supabaseAnonKey } from '@/lib/supabaseClient'
 const store = userStore()
 const props = defineProps({ url: String })
 
-const avatarUrl: Ref<string | undefined> = ref(undefined)
+const avatarUrl: Ref<string | undefined> = ref(
+    'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
+)
 const uploading = ref(false)
 
 watch(
@@ -37,6 +36,12 @@ watch(
     }
 )
 
+// const emit = defineEmits<{
+//   (event: 'onUpload', file: File): void
+// }>()
+
+const emit = defineEmits(['onUpload'])
+
 const avatarRendered = computed(() => {
     return avatarUrl.value
 })
@@ -45,7 +50,8 @@ const downloadImage = async (path: string | undefined) => {
     console.log('download path', path)
 
     if (!path) {
-        avatarUrl.value = '../assets/no_image_available.jpeg'
+        avatarUrl.value =
+            'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
         return
     }
 
@@ -61,7 +67,7 @@ async function uploadAvatar(event: Event) {
     if (target == null) return
     const files = target.files as FileList
     // eslint-disable-next-line no-debugger
-    debugger
+    // debugger
     try {
         uploading.value = true
 
@@ -73,6 +79,7 @@ async function uploadAvatar(event: Event) {
         const fileExt = file.name.split('.').pop()
         const fileName = `${Math.random()}.${fileExt}`
         const filePath = `${fileName}`
+        console.log(file, fileExt, fileName, filePath)
 
         let { error: uploadError } = await supabase.storage
             .from('avatars')
@@ -81,14 +88,15 @@ async function uploadAvatar(event: Event) {
         if (uploadError) {
             throw uploadError
         }
+
+        avatarUrl.value = `${supabaseUrl}'/storage/v1/object/sign/avatars/'${fileName}.${fileExt}?token=${supabaseAnonKey}`
+        console.log(filePath)
+
         store.setAvatarURL(filePath)
-        console.log(store)
+        emit('onUpload')
+        console.log('store', store)
     } catch (e: unknown) {
-        if (typeof e === 'string') {
-            e.toUpperCase()
-        } else if (e instanceof Error) {
-            e.message
-        }
+        tryCatchError(e)
     } finally {
         uploading.value = false
     }
@@ -96,4 +104,33 @@ async function uploadAvatar(event: Event) {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped lang="scss">
+@import '../assets/css/colors';
+.avatar-image {
+    margin-top: 20px;
+    width: 120px;
+    border-radius: 10px;
+}
+
+.input-upload {
+    position: relative;
+    display: flex;
+    width: 120px;
+    margin: 20px auto;
+    border: 1px solid $gray;
+    padding: 10px;
+    border-radius: 8px;
+
+    &__cta {
+        cursor: pointer;
+        visibility: hidden;
+        position: absolute;
+    }
+
+    &__label {
+        position: relative;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
+</style>

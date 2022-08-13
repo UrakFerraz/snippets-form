@@ -11,11 +11,15 @@ export const userStore = defineStore('user', {
         }
     },
     getters: {
-        mainState: (state) => state,
+        getUser: (state) => state.user,
+        getAvatarURL: (state) => state.avatarURL,
     },
     actions: {
         setAvatarURL(url: string) {
             this.avatarURL = url
+        },
+        setUser(user: User) {
+            this.user = user
         },
     },
 })

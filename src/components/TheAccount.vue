@@ -8,7 +8,7 @@
                 v-if="session && session.user"
                 id="email"
                 type="text"
-                :value="session.user.email"
+                :placeholder="session.user.email"
                 disabled
             />
         </div>
@@ -40,6 +40,9 @@ import { onMounted, ref } from 'vue'
 import Avatar from './TheAvatar.vue'
 import { supabase } from '@/lib/supabaseClient'
 import { Session } from '@supabase/supabase-js'
+import { tryCatchError, typeError } from '@/modules/ErrorHandler/typeError'
+import { userStore } from '@/store/user'
+const store = userStore()
 
 const props = defineProps<{ session: Session | null }>()
 
@@ -56,18 +59,17 @@ const handleImageUpload = async (path: string) => {
 const updateProfile = async () => {
     try {
         // eslint-disable-next-line no-debugger
-        debugger
+        // debugger
         loading.value = true
         const user = supabase.auth.user()
 
-        if (user === null)
-            throw new Error('========== user === null ==========')
+        if (user === null) return typeError('user === null')
 
         const updates = {
             id: user.id,
             username: username.value,
             website: website.value,
-            avatar_url: avatar_url.value || avatar_url,
+            avatar_url: avatar_url.value,
             updated_at: new Date(),
         }
 
@@ -79,29 +81,25 @@ const updateProfile = async () => {
             throw error
         }
     } catch (e: unknown) {
-        if (typeof e === 'string') {
-            e.toUpperCase()
-        } else if (e instanceof Error) {
-            e.message
-        }
+        tryCatchError(e)
     } finally {
         loading.value = false
     }
 }
 
 const getProfile = async () => {
-    if (props.session === undefined)
-        throw new Error('========== session === undefined ==========')
     try {
         loading.value = true
-        if (props.session === null)
-            throw new Error('========== session.user === undefined ==========')
+        if (props.session === null || props.session.user === null)
+            return typeError('session.user === undefined')
         const user = props.session.user
+
+        store.setUser(user)
 
         let { data, error, status } = await supabase
             .from('profiles')
             .select(`username, website, avatar_url`)
-            .eq('id', user?.id)
+            .eq('id', user.id)
             .single()
 
         if (error && status !== 406) {
@@ -115,13 +113,9 @@ const getProfile = async () => {
         }
 
         // eslint-disable-next-line no-debugger
-        debugger
+        // debugger
     } catch (e: unknown) {
-        if (typeof e === 'string') {
-            e.toUpperCase()
-        } else if (e instanceof Error) {
-            e.message
-        }
+        tryCatchError(e)
     } finally {
         loading.value = false
     }
@@ -132,6 +126,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@import '../assets/css/colors';
 .profile-form {
     &__actions {
         margin-top: 30px;
@@ -139,6 +134,12 @@ onMounted(() => {
         gap: 50px;
         flex-direction: column;
         align-items: center;
+    }
+}
+
+#email {
+    &::placeholder {
+        color: $darkest-color;
     }
 }
 </style>

@@ -41,6 +41,7 @@
 
 <script setup lang="ts">
 import { supabase } from '@/lib/supabaseClient'
+import { tryCatchError } from '@/modules/ErrorHandler/typeError'
 import { userStore } from '@/store/user'
 import { onMounted, ref } from 'vue'
 
@@ -72,11 +73,7 @@ async function getProfile() {
             avatar_url.value = data.avatar_url
         }
     } catch (e: unknown) {
-        if (typeof e === 'string') {
-            e.toUpperCase()
-        } else if (e instanceof Error) {
-            e.message
-        }
+        tryCatchError(e)
     } finally {
         loading.value = false
     }
@@ -103,11 +100,7 @@ async function updateProfile() {
 
         if (error) throw error
     } catch (e: unknown) {
-        if (typeof e === 'string') {
-            e.toUpperCase()
-        } else if (e instanceof Error) {
-            e.message
-        }
+        tryCatchError(e)
     } finally {
         loading.value = false
     }
@@ -119,11 +112,7 @@ async function signOut() {
         let { error } = await supabase.auth.signOut()
         if (error) throw error
     } catch (e: unknown) {
-        if (typeof e === 'string') {
-            e.toUpperCase()
-        } else if (e instanceof Error) {
-            e.message
-        }
+        tryCatchError(e)
     } finally {
         loading.value = false
     }

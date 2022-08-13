@@ -22,6 +22,7 @@ import { ref, watch, computed } from 'vue'
 import languages from '@/modules/syntax-highlighter/languages'
 import { snippetStore } from '@/store/snippet'
 import { storeToRefs } from 'pinia'
+import { typeError } from '@/modules/ErrorHandler/typeError'
 const store = snippetStore()
 const { snippet } = storeToRefs(store)
 let selectedLanguage = ref<keyof typeof languages>('text')
@@ -40,7 +41,7 @@ function getLanguageName(languageName: string) {
     const res = Object.entries(languages).find(
         (lang) => lang[1] === languageName
     )
-    if (res === undefined) return new Error('language name on list')
+    if (res === undefined) return typeError('language name on list')
     return res[0]
 }
 </script>
@@ -53,9 +54,11 @@ function getLanguageName(languageName: string) {
 *::after {
     box-sizing: border-box;
 }
-
-.language-selector__title {
-    color: $light-gray;
+.language-selector {
+    margin-bottom: 10px;
+    &__title {
+        color: $light-gray;
+    }
 }
 
 select {

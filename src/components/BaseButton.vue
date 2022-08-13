@@ -43,4 +43,8 @@ function undoSnippet() {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.button-container {
+    margin-block: 10px;
+}
+</style>
