@@ -1,0 +1,134 @@
+@import './colors';
+
+html {
+    background-color: $darkest-color;
+}
+
+div,
+h1,
+h2,
+h3,
+span,
+p,
+a,
+li,
+ul,
+button,
+input,
+html,
+body {
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+
+h2 {
+    min-height: 26px;
+}
+
+h1,
+h2,
+h3,
+p,
+li {
+    color: $gray;
+    line-height: 1.5;
+}
+
+li {
+    text-decoration: none;
+}
+
+a,
+button,
+input[type='file'],
+input[type='submit'] {
+    text-decoration: none;
+    color: aliceblue;
+    display: inline-grid;
+    font-size: 14px;
+    padding: 8px 15px;
+    border: 1px solid $gray;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    transition: 0.2s all ease;
+
+    &:hover {
+        transform: scale(0.98);
+        border-color: $light;
+    }
+}
+
+label {
+    color: $gray;
+    display: block;
+    text-align: left;
+    width: clamp(290px, 50%, 75ch);
+    margin: 15px auto 0 auto;
+}
+
+h1 {
+    font-size: 23px;
+}
+
+h2 {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+p {
+    font-size: 14px;
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+textarea,
+input[type='text'],
+input[type='website'],
+input[type='email'] {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid $gray;
+    margin-block: 10px;
+    width: clamp(290px, 50%, 75ch);
+
+    &:focus {
+        outline: $gray solid 3px;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-in-animation {
+    animation: fade-in 500ms ease-in 300ms 1 normal both;
+    &-fast {
+        animation: fade-in 500ms ease-in 100ms 1 normal both;
+    }
+
+    &-delayed {
+        animation: fade-in 500ms ease-in 500ms 1 normal both;
+    }
+}
+
+@media (min-width: 768px) {
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+    p,
+    a,
+    span {
+        font-size: 14px;
+    }
+}
