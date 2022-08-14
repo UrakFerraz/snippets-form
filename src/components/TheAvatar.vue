@@ -89,11 +89,9 @@ async function uploadAvatar(event: Event) {
             throw uploadError
         }
 
-        avatarUrl.value = `${supabaseUrl}'/storage/v1/object/sign/avatars/'${fileName}.${fileExt}?token=${supabaseAnonKey}`
         console.log(filePath)
-
+        emit('onUpload', filePath)
         store.setAvatarURL(filePath)
-        emit('onUpload')
         console.log('store', store)
     } catch (e: unknown) {
         tryCatchError(e)
