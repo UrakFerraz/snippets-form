@@ -17,11 +17,12 @@
 
 <script setup lang="ts">
 import { computed, Ref, ref, watch } from '@vue/runtime-core'
-import { supabase } from '@/lib/supabaseClient'
-import { userStore } from '@/store/user'
-import { tryCatchError } from '@/modules/ErrorHandler/typeError'
-import { supabaseUrl, supabaseAnonKey } from '@/lib/supabaseClient'
-const store = userStore()
+import { tryCatchError, typeError } from '@/modules/ErrorHandler/typeError'
+import {
+    fileUploader,
+    fileReaderFactory,
+    downloadImage,
+} from '@/lib/supabase/avatar-handler'
 const props = defineProps({ url: String })
 
 const avatarUrl: Ref<string | undefined> = ref(
@@ -32,13 +33,9 @@ const uploading = ref(false)
 watch(
     () => props.url,
     (cur) => {
-        downloadImage(cur)
+        downloadAvatar(cur)
     }
 )
-
-// const emit = defineEmits<{
-//   (event: 'onUpload', file: File): void
-// }>()
 
 const emit = defineEmits(['onUpload'])
 
@@ -46,53 +43,27 @@ const avatarRendered = computed(() => {
     return avatarUrl.value
 })
 
-const downloadImage = async (path: string | undefined) => {
-    console.log('download path', path)
-
-    if (!path) {
-        avatarUrl.value =
-            'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
-        return
-    }
-
-    const { data, error } = await supabase.storage
-        .from('avatars')
-        .download(path)
-    if (error) throw error
-    avatarUrl.value = URL.createObjectURL(data as Blob)
+const downloadAvatar = async (path: string | undefined) => {
+    await downloadImage(path, avatarUrl)
 }
 
 async function uploadAvatar(event: Event) {
     const target = event.target as HTMLInputElement
-    if (target == null) return
+    if (target == null)
+        return typeError(
+            '======================= event target null ======================= '
+        )
     const files = target.files as FileList
     // eslint-disable-next-line no-debugger
     // debugger
     try {
         uploading.value = true
 
-        if (!files || files.length === 0) {
-            throw new Error('You must select an image to upload.')
-        }
+        const avatar = fileReaderFactory(files)
 
-        const file: File = files[0]
-        const fileExt = file.name.split('.').pop()
-        const fileName = `${Math.random()}.${fileExt}`
-        const filePath = `${fileName}`
-        console.log(file, fileExt, fileName, filePath)
+        fileUploader(files)
 
-        let { error: uploadError } = await supabase.storage
-            .from('avatars')
-            .upload(filePath, file)
-
-        if (uploadError) {
-            throw uploadError
-        }
-
-        console.log(filePath)
-        emit('onUpload', filePath)
-        store.setAvatarURL(filePath)
-        console.log('store', store)
+        emit('onUpload', avatar.filePath)
     } catch (e: unknown) {
         tryCatchError(e)
     } finally {
