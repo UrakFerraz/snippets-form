@@ -1,5 +1,5 @@
 <template>
-    <form class="row flex flex-center" @submit.prevent="handleLogin">
+    <form class="row flex flex-center" @submit.prevent="checklogin">
         <div class="col-6 form-widget">
             <h1 class="header">Supabase + Vue 3</h1>
             <p class="description">
@@ -27,24 +27,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { supabase } from '@/lib/supabaseClient'
-import { tryCatchError } from '@/modules/ErrorHandler/typeError'
+import { handleLogin } from '@/lib/supabase/login-handler'
 
 const loading = ref<boolean>(false)
 const email = ref<string>('')
 
-const handleLogin = async () => {
-    try {
-        loading.value = true
-        const { error } = await supabase.auth.signIn({
-            email: email.value,
-        })
-        if (error) throw error
-        alert('Check your email for the login link!')
-    } catch (e: unknown) {
-        tryCatchError(e)
-    } finally {
-        loading.value = false
-    }
+const checklogin = async () => {
+    handleLogin(loading, email)
 }
 </script>
