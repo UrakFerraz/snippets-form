@@ -1,9 +1,12 @@
 <template>
     <div class="actions-form">
         <LanguageSelector />
-        <BaseButton :type="'filter'" />
-        <BaseButton :type="'undo'" />
-        <BaseButton :type="'copy'" />
+        <BaseButton
+            :type="'filter'"
+            :title="'Remover tabulação e quebras de linha'"
+        />
+        <BaseButton :type="'undo'" :title="'Desfazer edição'" />
+        <BaseButton :type="'copy'" :title="'copiar'" />
     </div>
 </template>
 

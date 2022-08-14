@@ -1,25 +1,7 @@
 <template>
     <div class="button-container">
-        <button
-            @click="removeSpaces()"
-            class="filter-btn"
-            v-if="props.type === 'filter'"
-        >
-            Remover tabulação e quebras de linha
-        </button>
-        <button
-            @click="copySnippet()"
-            class="filter-btn"
-            v-if="props.type === 'copy'"
-        >
-            Copiar
-        </button>
-        <button
-            @click="undoSnippet()"
-            class="filter-btn"
-            v-if="props.type === 'undo'"
-        >
-            Desfazer edição
+        <button @click="buttonClicked()" class="filter-btn">
+            {{ props.title }}
         </button>
     </div>
 </template>
@@ -27,19 +9,13 @@
 <script setup lang="ts">
 import { snippetStore } from '@/store/snippet'
 
-const props = defineProps({ type: String })
+const props = defineProps(['type', 'title'])
 const store = snippetStore()
 
-function removeSpaces() {
-    store.removeSpaces()
-}
-
-function copySnippet() {
-    store.copySnippet()
-}
-
-function undoSnippet() {
-    store.undoSnippet()
+function buttonClicked() {
+    if (props.type === 'filter') store.removeSpaces()
+    if (props.type === 'copy') store.copySnippet()
+    if (props.type === 'undo') store.undoSnippet()
 }
 </script>
 
