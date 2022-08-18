@@ -1,18 +1,18 @@
 <template>
     <div class="actions-form">
         <LanguageSelector />
-        <BaseButton
+        <ActionButton
             :type="'filter'"
             :title="'Remover tabulação e quebras de linha'"
         />
-        <BaseButton :type="'undo'" :title="'Desfazer edição'" />
-        <BaseButton :type="'copy'" :title="'copiar'" />
+        <ActionButton :type="'undo'" :title="'Desfazer edição'" />
+        <ActionButton :type="'copy'" :title="'copiar'" />
     </div>
 </template>
 
 <script setup lang="ts">
 import LanguageSelector from './LanguageSelector.vue'
-import BaseButton from './BaseButton.vue'
+import ActionButton from './ActionButton.vue'
 </script>
 
 <style scoped lang="scss">

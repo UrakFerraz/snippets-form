@@ -1,5 +1,7 @@
 <template>
-    <img :src="avatarRendered" alt="Avatar" class="avatar-image" />
+    <div class="avatar">
+        <img :src="avatarRendered" alt="Avatar" class="avatar-image" />
+    </div>
     <div class="input-upload">
         <input
             type="file"
@@ -75,10 +77,15 @@ async function uploadAvatar(event: Event) {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import '../assets/css/colors';
-.avatar-image {
-    margin-top: 20px;
-    width: 120px;
-    border-radius: 10px;
+
+.avatar {
+    height: 162px;
+    &-image {
+        margin-top: 20px;
+        width: 120px;
+        border-radius: 10px;
+        max-height: 130px;
+    }
 }
 
 .input-upload {
