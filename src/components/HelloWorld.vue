@@ -1,6 +1,6 @@
 <template>
     <div class="hello">
-        <h1>{{ msg }}</h1>
+        <h1>{{ props.msg }}</h1>
         <p>
             Snippet Editor created with Vue.js + TypeScript,<br />
             check out the
@@ -10,165 +10,39 @@
         </p>
         <h3>Installed CLI Plugins</h3>
         <ul>
-            <li>
-                <a
-                    href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-                    target="_blank"
-                    rel="noopener"
-                    >babel</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa"
-                    target="_blank"
-                    rel="noopener"
-                    >pwa</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router"
-                    target="_blank"
-                    rel="noopener"
-                    >router</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-                    target="_blank"
-                    rel="noopener"
-                    >eslint</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-jest"
-                    target="_blank"
-                    rel="noopener"
-                    >unit-jest</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript"
-                    target="_blank"
-                    rel="noopener"
-                    >typescript</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://github.com/PrismJS/prism#readme"
-                    target="_blank"
-                    rel="noopener"
-                    >prism js</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://github.com/vuejs/pinia#readme"
-                    target="_blank"
-                    rel="noopener"
-                    >pinia</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://github.com/supabase/supabase-js"
-                    target="_blank"
-                    rel="noopener"
-                    >supabase</a
-                >
+            <li v-for="link in InstalledCLIPlugins" :key="link.name">
+                <a :href="link.href" target="_blank" rel="noopener">{{
+                    link.name
+                }}</a>
             </li>
         </ul>
         <h3>Essential Links To VueJS</h3>
         <ul>
-            <li>
-                <a href="https://vuejs.org" target="_blank" rel="noopener"
-                    >Core Docs</a
-                >
-            </li>
-            <li>
-                <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-                    >Forum</a
-                >
-            </li>
-            <li>
-                <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-                    >Community Chat</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://twitter.com/vuejs"
-                    target="_blank"
-                    rel="noopener"
-                    >Twitter</a
-                >
-            </li>
-            <li>
-                <a href="https://news.vuejs.org" target="_blank" rel="noopener"
-                    >News</a
-                >
+            <li v-for="link in EssentialLinksToVueJS" :key="link.name">
+                <a :href="link.href" target="_blank" rel="noopener">{{
+                    link.name
+                }}</a>
             </li>
         </ul>
         <h3>Ecosystem</h3>
         <ul>
-            <li>
-                <a
-                    href="https://router.vuejs.org"
-                    target="_blank"
-                    rel="noopener"
-                    >vue-router</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://pinia.vuejs.org/"
-                    target="_blank"
-                    rel="noopener"
-                    >pinia</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://github.com/vuejs/vue-devtools#vue-devtools"
-                    target="_blank"
-                    rel="noopener"
-                    >vue-devtools</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://vue-loader.vuejs.org"
-                    target="_blank"
-                    rel="noopener"
-                    >vue-loader</a
-                >
-            </li>
-            <li>
-                <a
-                    href="https://github.com/supabase/supabase-js"
-                    target="_blank"
-                    rel="noopener"
-                    >supabase</a
-                >
+            <li v-for="link in Ecosystem" :key="link.name">
+                <a :href="link.href" target="_blank" rel="noopener">{{
+                    link.name
+                }}</a>
             </li>
         </ul>
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import {
+    InstalledCLIPlugins,
+    Ecosystem,
+    EssentialLinksToVueJS,
+} from '@/assets/links'
 
-export default defineComponent({
-    name: 'HelloWorld',
-    props: {
-        msg: String,
-    },
-})
+const props = defineProps<{ msg: string }>()
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
