@@ -5,14 +5,14 @@
             <p class="description">
                 Sign in via magic link with your email below
             </p>
-            <div>
+            <input-line :label="'Email'">
                 <input
                     class="inputField"
                     type="email"
                     placeholder="Your email"
                     v-model="email"
                 />
-            </div>
+            </input-line>
             <div>
                 <input
                     type="submit"
@@ -28,6 +28,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { handleLogin } from '@/lib/supabase/login-handler'
+import InputLine from './InputLine.vue'
 
 const loading = ref<boolean>(false)
 const email = ref<string>('')

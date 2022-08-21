@@ -1,7 +1,6 @@
 <template>
     <form class="form-widget" @submit.prevent="updateProfile">
-        <div>
-            <label for="email">Email</label>
+        <input-line :label="'Email'">
             <input
                 id="email"
                 type="text"
@@ -12,16 +11,13 @@
                 "
                 disabled
             />
-        </div>
-        <div>
-            <label for="username">Name</label>
+        </input-line>
+        <input-line :label="'Name'">
             <input id="username" type="text" v-model="username" />
-        </div>
-        <div>
-            <label for="website">Website</label>
+        </input-line>
+        <input-line :label="'Website'">
             <input id="website" type="website" v-model="website" />
-        </div>
-
+        </input-line>
         <div>
             <input
                 type="submit"
@@ -30,7 +26,6 @@
                 :disabled="loading"
             />
         </div>
-
         <div>
             <button class="button block" @click="signOut" :disabled="loading">
                 Sign Out
