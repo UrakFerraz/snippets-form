@@ -29,6 +29,20 @@ const routes: Array<RouteRecordRaw> = [
                 /* webpackChunkName: "profile" */ '../views/UserManagement.vue'
             ),
     },
+    {
+        path: '/register',
+        name: 'register',
+        component: () =>
+            import(
+                /* webpackChunkName: "profile" */ '../views/RegisterForm.vue'
+            ),
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: () =>
+            import(/* webpackChunkName: "profile" */ '../views/LoginForm.vue'),
+    },
 ]
 
 export default routes

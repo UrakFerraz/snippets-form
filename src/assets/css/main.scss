@@ -86,7 +86,8 @@ p {
 textarea,
 input[type='text'],
 input[type='website'],
-input[type='email'] {
+input[type='email'],
+input[type='password'] {
     padding: 10px;
     border-radius: 6px;
     border: 1px solid $gray;
