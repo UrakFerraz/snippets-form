@@ -1,12 +1,12 @@
 <template>
     <form class="form-widget" @submit.prevent="updateProfile">
-        <input-line :label="'Email'">
+        <input-line :label="'Email'" v-if="store.session">
             <input
                 id="email"
                 type="text"
                 :value="
-                    store.user && store.user.email
-                        ? store.user.email
+                    store.session.user && store.session.user.email
+                        ? store.session.user.email
                         : 'email not loading'
                 "
                 disabled
@@ -50,14 +50,19 @@ const store = userStore()
 async function getProfile() {
     try {
         loading.value = true
-        store.user = supabase.auth.user()
-        if (store.user === null) {
+        const _user = supabase.auth.user()
+        if (
+            _user === null ||
+            store.session === null ||
+            store.session.user === null
+        ) {
             throw new Error('========== store.user === null ==========')
         }
+        store.session.user = _user
         let { data, error, status } = await supabase
             .from('profiles')
             .select(`username, website, avatar_url`)
-            .eq('id', store.user.id)
+            .eq('id', _user.id)
             .single()
 
         if (error && status !== 406) throw error
@@ -77,12 +82,20 @@ async function getProfile() {
 async function updateProfile() {
     try {
         loading.value = true
-        store.user = supabase.auth.user()
-        if (store.user === null) {
+        const _user = supabase.auth.user()
+        if (
+            _user === null ||
+            store.session === null ||
+            store.session.user === null
+        ) {
+            throw new Error('========== store.user === null ==========')
+        }
+        store.session.user = _user
+        if (store.session.user === null) {
             throw new Error('========== store.user === null ==========')
         }
         const updates = {
-            id: store.user.id,
+            id: store.session.user.id,
             username: username.value,
             website: website.value,
             avatar_url: avatar_url.value,

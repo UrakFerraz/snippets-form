@@ -55,7 +55,7 @@ const login = async () => {
                 password: password.value,
             })
             if (error) throw error
-            router.push({ name: 'Home' })
+            router.push({ name: 'profile' })
         } catch (e: unknown) {
             tryCatchError(e)
         }

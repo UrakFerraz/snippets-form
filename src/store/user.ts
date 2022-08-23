@@ -1,25 +1,29 @@
-import { User } from '@supabase/supabase-js'
+import { Session, User } from '@supabase/supabase-js'
 import { defineStore } from 'pinia'
 
-type AuthUserState = { user: User | null; avatarURL: string }
+type AuthUserState = { session: Session | null; avatarURL: string }
 
 export const userStore = defineStore('user', {
     state: (): AuthUserState => {
         return {
-            user: null,
+            session: null,
             avatarURL: '../assets/no_image_available.jpeg',
         }
     },
     getters: {
-        getUser: (state) => state.user,
+        getUser: (state) => state.session,
         getAvatarURL: (state) => state.avatarURL,
     },
     actions: {
         setAvatarURL(url: string) {
             this.avatarURL = url
         },
+        setSession(session: Session) {
+            this.session = session
+        },
         setUser(user: User) {
-            this.user = user
+            if (this.session === null) return
+            this.session.user = user
         },
     },
 })

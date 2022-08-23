@@ -64,7 +64,7 @@ const register = async () => {
                 password: password.value,
             })
             if (error) throw error
-            router.push({ name: 'Login' })
+            router.push({ name: 'login' })
         } catch (e: unknown) {
             tryCatchError(e)
         }

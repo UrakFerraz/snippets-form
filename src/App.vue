@@ -10,6 +10,25 @@
     <router-view />
 </template>
 
+<script setup lang="ts">
+import { ref } from 'vue'
+import { supabase } from './lib/supabaseClient'
+import { userStore } from '@/store/user'
+const store = userStore()
+const appReady = ref<boolean | null>(null)
+
+const user = supabase.auth.user()
+
+supabase.auth.onAuthStateChange((_, session) => {
+    session !== null && session.user && store.setUser(session.user)
+    appReady.value = true
+})
+
+if (!user) {
+    appReady.value = true
+}
+</script>
+
 <style lang="scss">
 @import './assets/css/colors';
 

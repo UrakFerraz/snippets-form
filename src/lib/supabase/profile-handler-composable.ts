@@ -54,14 +54,13 @@ export function useProfile(props: Props) {
             loading.value = true
             if (props.session === null || props.session.user === null)
                 return typeError('session.user === undefined')
-            const user = props.session.user
 
-            store.setUser(user)
+            store.setUser(props.session.user)
 
             const { data, error, status } = await supabase
                 .from('profiles')
                 .select(`username, website, avatar_url`)
-                .eq('id', user.id)
+                .eq('id', props.session.user.id)
                 .single()
 
             if (error && status !== 406) {
