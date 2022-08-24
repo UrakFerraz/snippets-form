@@ -9,20 +9,18 @@
         <form @submit.prevent="login">
             <h1>Login</h1>
 
-            <div>
-                <label for="email">Email</label>
+            <input-line :label="'Email'">
                 <input type="text" required id="email" v-model="email" />
-            </div>
+            </input-line>
 
-            <div>
-                <label for="password">Password</label>
+            <input-line :label="'Password'">
                 <input
                     type="password"
                     required
                     id="password"
                     v-model="password"
                 />
-            </div>
+            </input-line>
             <div class="login__actions">
                 <button type="submit">Login</button>
 
@@ -39,14 +37,13 @@
 import { ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 import { useRouter } from 'vue-router'
+import InputLine from './InputLine.vue'
 import { tryCatchError } from '@/modules/ErrorHandler/typeError'
 
-// Create data / vars
 const router = useRouter()
 const email = ref(null)
 const password = ref(null)
 const errorMsg = ref(null)
-// Login function
 const login = async () => {
     if (email.value !== null && password.value !== null)
         try {

@@ -7,6 +7,7 @@
         />
         <ActionButton :type="'undo'" :title="'Desfazer edição'" />
         <ActionButton :type="'copy'" :title="'copiar'" />
+        <ActionButton :type="'save'" :title="'salvar'" />
     </div>
 </template>
 

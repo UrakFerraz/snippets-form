@@ -14,8 +14,8 @@ import { snippetStore } from '@/store/snippet'
 const store = snippetStore()
 let editableCode = ref<string>('')
 watch(editableCode, () => {
-    store.snippet = editableCode.value
-    store.edited = editableCode.value
+    store.addSnippet(editableCode.value)
+    store.addEdited(editableCode.value)
 })
 </script>
 

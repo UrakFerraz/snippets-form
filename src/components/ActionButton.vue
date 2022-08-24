@@ -8,14 +8,16 @@
 
 <script setup lang="ts">
 import { snippetStore } from '@/store/snippet'
-
-const props = defineProps(['type', 'title'])
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const store = snippetStore()
+const props = defineProps(['type', 'title'])
 
 function buttonClicked() {
     if (props.type === 'filter') store.removeSpaces()
     if (props.type === 'copy') store.copySnippet()
     if (props.type === 'undo') store.undoSnippet()
+    if (props.type === 'save') router.push({ name: 'save-form' })
 }
 </script>
 

@@ -43,6 +43,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
             import(/* webpackChunkName: "profile" */ '../views/LoginForm.vue'),
     },
+    {
+        path: '/save-form',
+        name: 'save-form',
+        component: () =>
+            import(/* webpackChunkName: "profile" */ '../views/SaveForm.vue'),
+    },
 ]
 
 export default routes

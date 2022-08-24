@@ -1,5 +1,5 @@
 <template>
-    <div className="Code">
+    <div class="code">
         <pre :class="languageClassName" v-html="codeContentToHTML"></pre>
     </div>
 </template>
@@ -17,4 +17,10 @@ const languageClassName = computed(() => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.code {
+    max-height: 700px;
+    overflow: auto;
+    margin-inline: 10vw;
+}
+</style>
