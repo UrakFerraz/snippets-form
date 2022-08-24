@@ -64,7 +64,7 @@ export const snippetStore = defineStore('snippet', {
         addTitle(payload: string) {
             this.title = payload
         },
-        clear() {
+        resetSnippet() {
             this.title = defaultValues.title
             this.snippet = defaultValues.snippet
             this.language = defaultValues.language

@@ -17,6 +17,7 @@ function buttonClicked() {
     if (props.type === 'filter') store.removeSpaces()
     if (props.type === 'copy') store.copySnippet()
     if (props.type === 'undo') store.undoSnippet()
+    if (props.type === 'reset') store.resetSnippet()
     if (props.type === 'save') router.push({ name: 'save-form' })
 }
 </script>

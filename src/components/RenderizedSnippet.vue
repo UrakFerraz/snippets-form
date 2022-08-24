@@ -8,9 +8,11 @@
 import highlightedCodeElement from '@/modules/syntax-highlighter/syntax-highlighter'
 import { computed } from 'vue'
 import { snippetStore } from '@/store/snippet'
+import { storeToRefs } from 'pinia'
 const store = snippetStore()
+const { edited, language } = storeToRefs(store)
 const codeContentToHTML = computed(() => {
-    return highlightedCodeElement(store.mainEdited, store.mainLanguage)
+    return highlightedCodeElement(edited.value, language.value)
 })
 const languageClassName = computed(() => {
     return `language-${store.mainLanguage}`

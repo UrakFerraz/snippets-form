@@ -11,11 +11,18 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { snippetStore } from '@/store/snippet'
+import { storeToRefs } from 'pinia'
 const store = snippetStore()
+const { edited } = storeToRefs(store)
 let editableCode = ref<string>('')
-watch(editableCode, () => {
-    store.addSnippet(editableCode.value)
-    store.addEdited(editableCode.value)
+watch([editableCode, edited], (newValues, oldValues) => {
+    if (newValues[0] !== oldValues[0]) {
+        store.addSnippet(newValues[0])
+        store.addEdited(newValues[0])
+    }
+    if (newValues[1] !== oldValues[1]) {
+        editableCode.value = newValues[1]
+    }
 })
 </script>
 
