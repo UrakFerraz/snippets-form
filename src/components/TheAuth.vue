@@ -26,14 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { handleLogin } from '@/lib/supabase/login-handler'
+import { useLogin } from '@/lib/supabase/login-handler-composable'
 import InputLine from './InputLine.vue'
-
-const loading = ref<boolean>(false)
-const email = ref<string>('')
-
+const { handleLogin, email, loading } = useLogin()
 const checklogin = async () => {
-    handleLogin(loading, email)
+    handleLogin()
 }
 </script>

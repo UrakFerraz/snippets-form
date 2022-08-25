@@ -1,12 +1,6 @@
 <template>
     <div class="login">
-        <!-- Error Handling -->
-        <div v-if="errorMsg">
-            <p>{{ errorMsg }}</p>
-        </div>
-
-        <!-- Login -->
-        <form @submit.prevent="login">
+        <form @submit.prevent="signIn">
             <h1>Login</h1>
 
             <input-line :label="'Email'">
@@ -34,28 +28,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { supabase } from '@/lib/supabaseClient'
-import { useRouter } from 'vue-router'
 import InputLine from './InputLine.vue'
-import { tryCatchError } from '@/modules/ErrorHandler/typeError'
-
+import { useLogin } from '@/lib/supabase/login-handler-composable'
+import { useRouter } from 'vue-router'
+const { login, email, password } = useLogin()
 const router = useRouter()
-const email = ref(null)
-const password = ref(null)
-const errorMsg = ref(null)
-const login = async () => {
-    if (email.value !== null && password.value !== null)
-        try {
-            const { error } = await supabase.auth.signIn({
-                email: email.value,
-                password: password.value,
-            })
-            if (error) throw error
-            router.push({ name: 'profile' })
-        } catch (e: unknown) {
-            tryCatchError(e)
-        }
+const signIn = async () => {
+    await login()
+    router.push({ name: 'profile' })
 }
 </script>
 
