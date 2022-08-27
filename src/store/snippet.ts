@@ -41,13 +41,13 @@ export const snippetStore = defineStore('snippet', {
     actions: {
         removeSpaces() {
             const filtered = removeWhiteSpaces(this.snippet)
-            this.edited = filtered
+            this.addEdited(filtered)
         },
         copySnippet() {
             copyToClipboard(this.edited)
         },
         undoSnippet() {
-            this.edited = this.snippet
+            this.addEdited(this.snippet)
         },
         addSnippet(payload: string) {
             this.snippet = payload

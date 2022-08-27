@@ -3,7 +3,7 @@
         class="snippet-textarea"
         rows="12"
         cols="1"
-        v-model="editableCode"
+        v-model="snippet"
         placeholder="Paste code here..."
     ></textarea>
 </template>
@@ -14,14 +14,14 @@ import { snippetStore } from '@/store/snippet'
 import { storeToRefs } from 'pinia'
 const store = snippetStore()
 const { edited } = storeToRefs(store)
-let editableCode = ref<string>('')
-watch([editableCode, edited], (newValues, oldValues) => {
+let snippet = ref<string>('')
+watch([snippet, edited], (newValues, oldValues) => {
     if (newValues[0] !== oldValues[0]) {
         store.addSnippet(newValues[0])
         store.addEdited(newValues[0])
     }
     if (newValues[1] !== oldValues[1]) {
-        editableCode.value = newValues[1]
+        snippet.value = newValues[0]
     }
 })
 </script>
