@@ -1,19 +1,25 @@
 <template>
     <div class="avatar">
-        <img :src="avatarRendered" alt="Avatar" class="avatar-image" />
-    </div>
-    <div class="input-upload">
-        <input
-            type="file"
-            id="single"
-            accept="image/*"
-            class="input-upload__cta"
-            @change="uploadAvatar"
-            :disabled="uploading"
-        />
-        <label class="input-upload__label" htmlFor="single">
-            <span>{{ uploading ? 'UpLoading...' : 'Upload' }}</span>
-        </label>
+        <div class="avatar__frame">
+            <img
+                :src="avatarRendered"
+                alt="Avatar"
+                class="avatar__frame--image"
+            />
+        </div>
+        <div class="avatar__input-upload">
+            <input
+                type="file"
+                id="single"
+                accept="image/*"
+                class="avatar__input-upload--cta"
+                @change="uploadAvatar"
+                :disabled="uploading"
+            />
+            <label class="avatar__input-upload--label" htmlFor="single">
+                <span>{{ uploading ? 'UpLoading...' : 'Upload' }}</span>
+            </label>
+        </div>
     </div>
 </template>
 
@@ -77,34 +83,33 @@ async function uploadAvatar(event: Event) {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .avatar {
-    height: 162px;
-    &-image {
-        margin-top: 20px;
-        width: 120px;
-        border-radius: 10px;
-        max-height: 130px;
+    &__frame {
+        height: 162px;
+        &--image {
+            margin-top: 20px;
+            width: 120px;
+            border-radius: 10px;
+            max-height: 130px;
+        }
     }
-}
-
-.input-upload {
-    position: relative;
-    display: flex;
-    width: 120px;
-    margin: 20px auto;
-    border: 1px solid $gray;
-    padding: 10px;
-    border-radius: 8px;
-
-    &__cta {
-        cursor: pointer;
-        visibility: hidden;
-        position: absolute;
-    }
-
-    &__label {
+    &__input-upload {
         position: relative;
-        margin: 0 auto;
-        text-align: center;
+        display: flex;
+        width: 120px;
+        margin: 20px auto;
+        border: 1px solid $gray;
+        padding: 10px;
+        border-radius: 8px;
+        &--cta {
+            cursor: pointer;
+            visibility: hidden;
+            position: absolute;
+        }
+        &--label {
+            position: relative;
+            margin: 0 auto;
+            text-align: center;
+        }
     }
 }
 </style>
