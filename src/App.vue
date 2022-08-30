@@ -30,8 +30,6 @@ if (!user) {
 </script>
 
 <style lang="scss">
-@import './assets/css/colors';
-
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

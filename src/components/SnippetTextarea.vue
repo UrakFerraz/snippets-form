@@ -27,7 +27,6 @@ watch([snippet, edited], (newValues, oldValues) => {
 </script>
 
 <style scoped lang="scss">
-@import '../assets/css/colors';
 .snippet-textarea {
     padding: 10px;
     box-sizing: border-box;

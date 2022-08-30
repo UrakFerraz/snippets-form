@@ -47,8 +47,6 @@ function getLanguageName(languageName: string) {
 </script>
 
 <style scoped lang="scss">
-@import '../assets/css/colors';
-
 *,
 *::before,
 *::after {

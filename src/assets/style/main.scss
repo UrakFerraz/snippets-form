@@ -1,4 +1,6 @@
-@import './colors';
+@import './_colors.scss';
+@import './normalize.scss';
+@import './globals.scss';
 
 html {
     background-color: $darkest-color;

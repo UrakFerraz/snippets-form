@@ -51,7 +51,6 @@ function profileSignOut() {
 </script>
 
 <style scoped lang="scss">
-@import '../assets/css/colors';
 .profile-form {
     &__actions {
         margin-top: 30px;

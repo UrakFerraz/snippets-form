@@ -12,6 +12,11 @@ module.exports = defineConfig({
 
     css: {
         sourceMap: true,
+        loaderOptions: {
+            sass: {
+                additionalData: `@import "@/assets/style/_colors.scss";`,
+            },
+        },
     },
     devServer: {
         port: 3000,
