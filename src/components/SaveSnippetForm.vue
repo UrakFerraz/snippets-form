@@ -27,12 +27,15 @@
 import { useRouter } from 'vue-router'
 import { useSnippet } from '@/lib/supabase/snippets-handler-composable'
 import InputLine from './InputLine.vue'
-const { saveSnippet, languageInput, titleInput, tagsInput } = useSnippet()
+import { onMounted } from 'vue';
+const { saveSnippet, languageInput, titleInput, tagsInput, readSnippets } = useSnippet()
 const router = useRouter()
 const saveSnippetOnDatabase = async () => {
     await saveSnippet()
     router.push({ name: 'snippets-form' })
 }
+
+onMounted(async () => readSnippets());
 </script>
 
 <style lang="scss" scoped>

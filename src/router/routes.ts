@@ -49,6 +49,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
             import(/* webpackChunkName: "profile" */ '../views/SaveForm.vue'),
     },
+    {
+        path: '/snippets-list',
+        name: 'snippets-list',
+        component: () =>
+            import(/* webpackChunkName: "profile" */ '../views/SnippetsList.vue'),
+    },
 ]
 
 export default routes

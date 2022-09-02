@@ -3,14 +3,14 @@
         <h1>{{ props.msg }}</h1>
         <SnippetTextarea />
         <ActionsForm />
-        <RenderizedSnippet />
+        <EditedSnippet />
     </div>
 </template>
 
 <script setup lang="ts">
 import ActionsForm from './ActionsForm.vue'
 import SnippetTextarea from './SnippetTextarea.vue'
-import RenderizedSnippet from './RenderizedSnippet.vue'
+import EditedSnippet from './EditedSnippet.vue'
 
 const props = defineProps({ msg: String })
 </script>
