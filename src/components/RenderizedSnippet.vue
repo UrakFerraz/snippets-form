@@ -7,15 +7,16 @@
 <script setup lang="ts">
 import highlightedCodeElement from '@/modules/syntax-highlighter/syntax-highlighter'
 import { computed } from 'vue'
-import { snippetStore } from '@/store/snippet'
-import { storeToRefs } from 'pinia'
-const store = snippetStore()
-const { edited, language } = storeToRefs(store)
+type Props = {
+    edited: string
+    language: string
+}
+const props = defineProps<Props>()
 const codeContentToHTML = computed(() => {
-    return highlightedCodeElement(edited.value, language.value)
+    return highlightedCodeElement(props.edited, props.language)
 })
 const languageClassName = computed(() => {
-    return `language-${store.mainLanguage}`
+    return `language-${props.language}`
 })
 </script>
 
@@ -23,6 +24,6 @@ const languageClassName = computed(() => {
 .code {
     max-height: 700px;
     overflow: auto;
-    margin-inline: 10vw;
+    width: 100%;
 }
 </style>
