@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { useLogin } from '@/lib/supabase/login-handler-composable'
-import InputLine from './InputLine.vue'
+import InputLine from '@/components/InputLine.vue'
 const { handleLogin, loading } = useLogin()
 const checklogin = async () => {
     handleLogin()

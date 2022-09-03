@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { useSnippet } from '@/lib/supabase/snippets-handler-composable'
-import RenderizedSnippet from '@/components/RenderizedSnippet.vue'
+import RenderizedSnippet from './RenderizedSnippet.vue'
 import { onMounted } from 'vue'
 const { readSnippets, snippets } = useSnippet()
 

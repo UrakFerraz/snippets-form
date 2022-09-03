@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { useSnippet } from '@/lib/supabase/snippets-handler-composable'
-import InputLine from './InputLine.vue'
+import InputLine from '@/components/InputLine.vue'
 import { onMounted } from 'vue'
 const { saveSnippet, readSnippets } = useSnippet()
 const router = useRouter()

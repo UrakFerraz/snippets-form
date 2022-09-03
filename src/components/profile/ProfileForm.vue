@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import { toRefs } from 'vue'
 import { Session } from '@supabase/supabase-js'
-import InputLine from './InputLine.vue'
+import InputLine from '@/components/InputLine.vue'
 type Props = {
     session: Session | null
     loading: boolean

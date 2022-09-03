@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import SnippetForm from '@/components/SnippetForm.vue' // @ is an alias to /src
+import SnippetForm from '@/components/snippets/SnippetForm.vue' // @ is an alias to /src
 
 export default defineComponent({
     name: 'SnippetFormView',

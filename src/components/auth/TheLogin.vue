@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import InputLine from './InputLine.vue'
+import InputLine from '@/components/InputLine.vue'
 import { useLogin } from '@/lib/supabase/login-handler-composable'
 import { useRouter } from 'vue-router'
 const { login } = useLogin()

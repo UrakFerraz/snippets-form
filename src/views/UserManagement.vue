@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
-import account from '@/components/TheAccount.vue'
-import auth from '@/components/TheAuth.vue'
+import account from '@/components/auth/TheAccount.vue'
+import auth from '@/components/auth/TheAuth.vue'
 import { supabase } from '@/lib/supabaseClient'
 import { Session } from '@supabase/supabase-js'
 

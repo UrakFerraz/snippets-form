@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import Avatar from './TheAvatar.vue'
-import ProfileForm from './ProfileForm.vue'
+import Avatar from '@/components/profile/TheAvatar.vue'
+import ProfileForm from '@/components/profile/ProfileForm.vue'
 import { useProfile } from '@/lib/supabase/profile-handler-composable'
 import { Session } from '@supabase/supabase-js'
 

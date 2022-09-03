@@ -36,7 +36,7 @@ import { tryCatchError } from '@/modules/ErrorHandler/typeError'
 import { userStore } from '@/store/user'
 import { inputsStore } from '@/store/inputs'
 import { onMounted, ref } from 'vue'
-import InputLine from './InputLine.vue'
+import InputLine from '@/components/InputLine.vue'
 import { storeToRefs } from 'pinia'
 const loading = ref(true)
 const avatar_url = ref('')

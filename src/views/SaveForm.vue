@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-import SaveSnippetForm from '@/components/SaveSnippetForm.vue' // @ is an alias to /src
+import SaveSnippetForm from '@/components/snippets/SaveSnippetForm.vue' // @ is an alias to /src
 </script>

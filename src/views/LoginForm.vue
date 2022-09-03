@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-import Login from '@/components/TheLogin.vue' // @ is an alias to /src
+import Login from '@/components/auth/TheLogin.vue' // @ is an alias to /src
 </script>

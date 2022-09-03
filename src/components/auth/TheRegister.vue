@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import InputLine from './InputLine.vue'
+import InputLine from '@/components/InputLine.vue'
 import { supabase } from '@/lib/supabaseClient'
 import { useRouter } from 'vue-router'
 import { tryCatchError } from '@/modules/ErrorHandler/typeError'

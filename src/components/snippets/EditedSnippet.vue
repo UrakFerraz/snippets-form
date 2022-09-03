@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import RenderizedSnippet from '@/components/RenderizedSnippet.vue'
+import RenderizedSnippet from './RenderizedSnippet.vue'
 import { snippetStore } from '@/store/snippet'
 import { storeToRefs } from 'pinia'
 const store = snippetStore()

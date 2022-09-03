@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-import Register from '@/components/TheRegister.vue' // @ is an alias to /src
+import Register from '@/components/auth/TheRegister.vue' // @ is an alias to /src
 </script>
