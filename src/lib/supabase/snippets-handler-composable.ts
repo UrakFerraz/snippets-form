@@ -2,7 +2,12 @@ import { supabase } from '../supabaseClient'
 import { snippetStore } from '@/store/snippet'
 import { storeToRefs } from 'pinia'
 const store = snippetStore()
+import { inputsStore } from '@/store/inputs'
+const storeInputs = inputsStore()
 const { snippet, language, tags, title } = storeToRefs(store)
+const languageInput = storeToRefs(storeInputs).language
+const titleInput = storeToRefs(storeInputs).title
+const tagsInput = storeToRefs(storeInputs).tags
 import { tryCatchError } from '@/modules/ErrorHandler/typeError'
 import { ref } from 'vue'
 
@@ -16,9 +21,6 @@ type Snippet = {
     language: string
 }
 
-const languageInput = ref<string | null>(null)
-const titleInput = ref<string | null>(null)
-const tagsInput = ref<string | null>(null)
 const snippets = ref<Snippet[] | null>([])
 
 export function useSnippet() {

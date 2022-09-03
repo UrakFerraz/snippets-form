@@ -8,26 +8,17 @@
         <!-- Register -->
         <form @submit.prevent="register">
             <h1>Register</h1>
-
-            <input-line :label="'Email'">
-                <input type="text" required id="email" v-model="email" />
-            </input-line>
-            <input-line :label="'Password'">
-                <input
-                    type="password"
-                    required
-                    id="password"
-                    v-model="password"
-                />
-            </input-line>
-            <input-line :label="'Confirm Password'">
-                <input
-                    type="password"
-                    required
-                    id="confirmPassword"
-                    v-model="confirmPassword"
-                />
-            </input-line>
+            <InputLine :label="'Email'" :type="'text'" :is-required="true" />
+            <InputLine
+                :label="'Password'"
+                :type="'password'"
+                :is-required="true"
+            />
+            <InputLine
+                :label="'Confirm Password'"
+                :type="'password'"
+                :is-required="true"
+            />
             <div class="register__actions">
                 <button type="submit">Register</button>
                 <router-link :to="{ name: 'login' }">
@@ -45,11 +36,11 @@ import InputLine from './InputLine.vue'
 import { supabase } from '@/lib/supabaseClient'
 import { useRouter } from 'vue-router'
 import { tryCatchError } from '@/modules/ErrorHandler/typeError'
-
+import { inputsStore } from '@/store/inputs'
+import { storeToRefs } from 'pinia'
+const store = inputsStore()
+const { email, password, confirmPassword } = storeToRefs(store)
 const router = useRouter()
-const email = ref<string | null>(null)
-const password = ref<string | null>(null)
-const confirmPassword = ref<string | null>(null)
 const errorMsg = ref<string | null>(null)
 
 const register = async () => {

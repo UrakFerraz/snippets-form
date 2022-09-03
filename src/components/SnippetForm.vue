@@ -3,7 +3,9 @@
         <h1>{{ props.msg }}</h1>
         <SnippetTextarea />
         <ActionsForm />
-        <EditedSnippet />
+        <div class="edited-snippet">
+            <EditedSnippet />
+        </div>
     </div>
 </template>
 
@@ -14,4 +16,8 @@ import EditedSnippet from './EditedSnippet.vue'
 
 const props = defineProps({ msg: String })
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.edited-snippet {
+    margin-inline: 10vw;
+}
+</style>

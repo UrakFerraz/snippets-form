@@ -1,19 +1,14 @@
 <template>
     <div class="profile-form">
-        <input-line :label="'Email'">
-            <input
-                v-if="session && session.user"
-                type="text"
-                :placeholder="session.user.email"
-                disabled
-            />
-        </input-line>
-        <input-line :label="'Name'">
-            <input id="username" type="text" v-model="username" />
-        </input-line>
-        <input-line :label="'Website'">
-            <input id="website" type="website" v-model="website" />
-        </input-line>
+        <InputLine
+            v-if="session && session.user"
+            :label="'Email'"
+            :type="'text'"
+            :placeholder="session.user.email"
+            :is-disabled="true"
+        />
+        <InputLine :label="'Username'" :type="'text'" />
+        <InputLine :label="'Website'" :type="'text'" />
         <div class="profile-form__actions">
             <button
                 class="button block primary"
@@ -35,12 +30,10 @@ import { Session } from '@supabase/supabase-js'
 import InputLine from './InputLine.vue'
 type Props = {
     session: Session | null
-    username: string | null
-    website: string | null
     loading: boolean
 }
 const props = defineProps<Props>()
-const { session, username, website, loading } = toRefs(props)
+const { session, loading } = toRefs(props)
 const emit = defineEmits(['onUpdateProfile', 'onProfileSignOut'])
 function updateProfile() {
     emit('onUpdateProfile')

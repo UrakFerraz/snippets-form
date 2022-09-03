@@ -2,19 +2,12 @@
     <div class="login">
         <form @submit.prevent="signIn">
             <h1>Login</h1>
-
-            <input-line :label="'Email'">
-                <input type="text" required id="email" v-model="email" />
-            </input-line>
-
-            <input-line :label="'Password'">
-                <input
-                    type="password"
-                    required
-                    id="password"
-                    v-model="password"
-                />
-            </input-line>
+            <InputLine :label="'Email'" :type="'text'" :is-required="true" />
+            <InputLine
+                :label="'Password'"
+                :type="'password'"
+                :is-required="true"
+            />
             <div class="login__actions">
                 <button type="submit">Login</button>
 
@@ -31,7 +24,7 @@
 import InputLine from './InputLine.vue'
 import { useLogin } from '@/lib/supabase/login-handler-composable'
 import { useRouter } from 'vue-router'
-const { login, email, password } = useLogin()
+const { login } = useLogin()
 const router = useRouter()
 const signIn = async () => {
     await login()

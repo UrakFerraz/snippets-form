@@ -5,20 +5,19 @@
             <p class="description">
                 Sign in via magic link with your email below
             </p>
-            <input-line :label="'Email'">
-                <input
-                    class="inputField"
-                    type="email"
-                    placeholder="Your email"
-                    v-model="email"
-                />
-            </input-line>
+            <InputLine
+                :label="'Email'"
+                class="inputField"
+                :type="'email'"
+                placeholder="Your email"
+            />
             <div>
-                <input
-                    type="submit"
-                    class="button block"
+                <InputLine
+                    :label="'Submit'"
+                    :type="'submit'"
+                    :is-disabled="loading"
+                    class="button block primary"
                     :value="loading ? 'Loading' : 'Send magic link'"
-                    :disabled="loading"
                 />
             </div>
         </div>
@@ -28,7 +27,7 @@
 <script setup lang="ts">
 import { useLogin } from '@/lib/supabase/login-handler-composable'
 import InputLine from './InputLine.vue'
-const { handleLogin, email, loading } = useLogin()
+const { handleLogin, loading } = useLogin()
 const checklogin = async () => {
     handleLogin()
 }

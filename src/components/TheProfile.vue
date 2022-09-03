@@ -1,29 +1,25 @@
 <template>
     <form class="form-widget" @submit.prevent="updateProfile">
-        <input-line :label="'Email'" v-if="store.session">
-            <input
-                id="email"
-                type="text"
-                :value="
-                    store.session.user && store.session.user.email
-                        ? store.session.user.email
-                        : 'email not loading'
-                "
-                disabled
-            />
-        </input-line>
-        <input-line :label="'Name'">
-            <input id="username" type="text" v-model="username" />
-        </input-line>
-        <input-line :label="'Website'">
-            <input id="website" type="website" v-model="website" />
-        </input-line>
+        <InputLine
+            :label="'Email'"
+            v-if="store.session"
+            :type="'text'"
+            :is-disabled="true"
+            :value="
+                store.session.user && store.session.user.email
+                    ? store.session.user.email
+                    : 'email not loading'
+            "
+        />
+        <InputLine :label="'Name'" :type="'text'" />
+        <InputLine :label="'Website'" :type="'website'" />
         <div>
-            <input
-                type="submit"
+            <InputLine
+                :label="'Website'"
+                :type="'submit'"
+                :is-disabled="loading"
                 class="button block primary"
                 :value="loading ? 'Loading ...' : 'Update'"
-                :disabled="loading"
             />
         </div>
         <div>
@@ -38,13 +34,14 @@
 import { supabase } from '@/lib/supabaseClient'
 import { tryCatchError } from '@/modules/ErrorHandler/typeError'
 import { userStore } from '@/store/user'
+import { inputsStore } from '@/store/inputs'
 import { onMounted, ref } from 'vue'
-
+import InputLine from './InputLine.vue'
+import { storeToRefs } from 'pinia'
 const loading = ref(true)
-const username = ref('')
-const website = ref('')
 const avatar_url = ref('')
-
+const storeInputs = inputsStore()
+const { username, website } = storeToRefs(storeInputs)
 const store = userStore()
 
 async function getProfile() {

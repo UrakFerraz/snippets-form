@@ -2,12 +2,12 @@ import { Ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 import { ref } from 'vue'
 import { tryCatchError } from '@/modules/ErrorHandler/typeError'
-
+import { inputsStore } from '@/store/inputs'
+import { storeToRefs } from 'pinia'
+const store = inputsStore()
+const { email, password } = storeToRefs(store)
 type Loading = Ref<boolean>
-type Email = Ref<string | undefined>
 
-const email: Email = ref(undefined)
-const password = ref(null)
 const loading: Loading = ref<boolean>(false)
 
 export function useLogin() {

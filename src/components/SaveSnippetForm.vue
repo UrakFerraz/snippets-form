@@ -2,15 +2,9 @@
     <div class="save">
         <form @submit.prevent="saveSnippetOnDatabase">
             <h1>Save snippet</h1>
-            <input-line :label="'Title'">
-                <input type="text" required v-model="titleInput" />
-            </input-line>
-            <input-line :label="'Language'">
-                <input type="text" v-model="languageInput" />
-            </input-line>
-            <input-line :label="'Tags'">
-                <input type="text" v-model="tagsInput" />
-            </input-line>
+            <InputLine :label="'Title'" :type="'text'" :is-required="true" />
+            <InputLine :label="'Language'" :type="'text'" />
+            <InputLine :label="'Tags'" :type="'text'" />
             <div class="save__actions">
                 <button type="submit">Save</button>
 
@@ -27,15 +21,15 @@
 import { useRouter } from 'vue-router'
 import { useSnippet } from '@/lib/supabase/snippets-handler-composable'
 import InputLine from './InputLine.vue'
-import { onMounted } from 'vue';
-const { saveSnippet, languageInput, titleInput, tagsInput, readSnippets } = useSnippet()
+import { onMounted } from 'vue'
+const { saveSnippet, readSnippets } = useSnippet()
 const router = useRouter()
 const saveSnippetOnDatabase = async () => {
     await saveSnippet()
     router.push({ name: 'snippets-form' })
 }
 
-onMounted(async () => readSnippets());
+onMounted(async () => readSnippets())
 </script>
 
 <style lang="scss" scoped>
