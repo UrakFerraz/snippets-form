@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-form">
+  <div class="profile-form__inputs">
     <InputLine
       v-if="session && session.user"
       :label="'Email'"
@@ -9,7 +9,7 @@
     />
     <InputLine :label="'Username'" :type="'text'" />
     <InputLine :label="'Website'" :type="'text'" />
-    <div class="profile-form__actions">
+    <div class="profile-form__inputs--actions">
       <button class="button block primary" @click="updateProfile()" :disabled="loading">
         <span>{{ loading ? "Loading..." : "Update" }}</span>
       </button>
@@ -42,12 +42,14 @@ function profileSignOut() {
 
 <style scoped lang="scss">
 .profile-form {
-  &__actions {
-    margin-top: 30px;
-    display: flex;
-    gap: 50px;
-    flex-direction: column;
-    align-items: center;
+  &__inputs {
+    &--actions {
+      margin-top: 30px;
+      display: flex;
+      gap: 50px;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 }
 

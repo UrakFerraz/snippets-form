@@ -51,7 +51,7 @@ input[type='submit'] {
     font-size: 14px;
     padding: 8px 15px;
     border: 1px solid $gray;
-    border-radius: 5px;
+    border-radius: 2px;
     background: transparent;
     cursor: pointer;
     transition: 0.2s all ease;
@@ -91,7 +91,7 @@ input[type='website'],
 input[type='email'],
 input[type='password'] {
     padding: 10px;
-    border-radius: 6px;
+    border-radius: 2px;
     border: 1px solid $gray;
     margin-block: 10px;
     width: clamp(290px, 50%, 75ch);

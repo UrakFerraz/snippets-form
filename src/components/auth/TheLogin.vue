@@ -31,6 +31,10 @@ const signIn = async () => {
 <style lang="scss" scoped>
 .login {
   margin-block: 20px;
+  width: 90vw;
+  max-width: 700px;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
+  padding: 30px;
   &__actions {
     margin-block: 20px;
     display: flex;
