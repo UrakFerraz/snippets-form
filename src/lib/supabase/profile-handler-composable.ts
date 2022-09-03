@@ -3,14 +3,14 @@ import { supabase } from '@/lib/supabaseClient'
 import { Session } from '@supabase/supabase-js'
 import { tryCatchError, typeError } from '@/modules/ErrorHandler/typeError'
 import { userStore } from '@/store/user'
-
+import { storeToRefs } from 'pinia'
+import { inputsStore } from '@/store/inputs'
+const storeInputs = inputsStore()
+const { username, website } = storeToRefs(storeInputs)
 type Props = Readonly<{ session: Session | null }>
 
 export function useProfile(props: Props) {
     const store = userStore()
-    const loading = ref(false)
-    const username = ref('')
-    const website = ref('')
     const avatar_url = ref('')
 
     const handleImageUpload = async (path: string) => {
@@ -22,7 +22,7 @@ export function useProfile(props: Props) {
         try {
             // eslint-disable-next-line no-debugger
             // debugger
-            loading.value = true
+            store.setLoading(true)
             const user = supabase.auth.user()
 
             if (user === null) return typeError('user === null')
@@ -45,13 +45,13 @@ export function useProfile(props: Props) {
         } catch (e: unknown) {
             tryCatchError(e)
         } finally {
-            loading.value = false
+            store.setLoading(false)
         }
     }
 
     const getProfile = async () => {
         try {
-            loading.value = true
+            store.setLoading(true)
             if (props.session === null || props.session.user === null)
                 return typeError('session.user === undefined')
 
@@ -68,8 +68,8 @@ export function useProfile(props: Props) {
             }
 
             if (data) {
-                username.value = data.username
-                website.value = data.website
+                storeInputs.setUsername(data.username)
+                storeInputs.setWebsite(data.website)
                 avatar_url.value = data.avatar_url
             }
 
@@ -78,7 +78,7 @@ export function useProfile(props: Props) {
         } catch (e: unknown) {
             tryCatchError(e)
         } finally {
-            loading.value = false
+            store.setLoading(false)
         }
     }
 
@@ -90,10 +90,7 @@ export function useProfile(props: Props) {
         avatar_url,
         getProfile,
         handleImageUpload,
-        loading,
         profileSignOut,
         updateProfile,
-        username,
-        website,
     }
 }

@@ -12,7 +12,6 @@ function fileReaderFactory(files: Files) {
     if (!files || files.length === 0) {
         typeError('You must select an image to upload.')
     }
-
     const file: File = files[0]
     const fileExt = file.name.split('.').pop()
     const fileName = `${Math.random()}.${fileExt}`
