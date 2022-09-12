@@ -70,6 +70,7 @@ export function useProfile(props: Props) {
             if (data) {
                 storeInputs.setUsername(data.username)
                 storeInputs.setWebsite(data.website)
+                storeInputs.setEmail(data.email)
                 avatar_url.value = data.avatar_url
             }
 

@@ -101,6 +101,12 @@ input[type='password'] {
     }
 }
 
+input {
+    &::placeholder {
+        color: $darkest-color;
+    }
+}
+
 @keyframes fade-in {
     0% {
         opacity: 0;

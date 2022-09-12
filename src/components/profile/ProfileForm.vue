@@ -52,10 +52,4 @@ function profileSignOut() {
     }
   }
 }
-
-input {
-  &::placeholder {
-    color: $darkest-color;
-  }
-}
 </style>
