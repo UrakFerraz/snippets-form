@@ -11,9 +11,9 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { snippetStore } from "@/store/snippet";
+import { editedSnippetStore } from "@/store/snippet/edited";
 import { storeToRefs } from "pinia";
-const store = snippetStore();
+const store = editedSnippetStore();
 const { edited } = storeToRefs(store);
 let snippet = ref<string>("");
 watch([snippet, edited], (newValues, oldValues) => {

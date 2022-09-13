@@ -20,10 +20,10 @@
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
 import languages from "@/modules/syntax-highlighter/languages";
-import { snippetStore } from "@/store/snippet";
+import { editedSnippetStore } from "@/store/snippet/edited";
 import { storeToRefs } from "pinia";
 import { typeError } from "@/modules/ErrorHandler/typeError";
-const store = snippetStore();
+const store = editedSnippetStore();
 const { snippet } = storeToRefs(store);
 let selectedLanguage = ref<keyof typeof languages>("text");
 

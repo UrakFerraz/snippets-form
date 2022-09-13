@@ -10,7 +10,7 @@ const defaultValues = {
     tags: 'text',
 }
 
-interface SnippetState {
+interface editedSnippetState {
     snippet: string
     language: string
     edited: string
@@ -18,14 +18,14 @@ interface SnippetState {
     tags: string
 }
 
-export const snippetStore = defineStore('snippet', {
-    state: (): SnippetState => {
+export const editedSnippetStore = defineStore('edited-snippet', {
+    state: (): editedSnippetState => {
         return {
-            snippet: 'hello world',
-            language: 'text',
-            edited: 'hello world',
-            title: 'hello world',
-            tags: 'text',
+            title: defaultValues.title,
+            snippet: defaultValues.snippet,
+            language: defaultValues.language,
+            tags: defaultValues.tags,
+            edited: defaultValues.edited,
         }
     },
     // could also be defined as

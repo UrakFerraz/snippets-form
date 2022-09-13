@@ -1,6 +1,6 @@
 <template>
   <ul class="snippets">
-    <li class="snippets-list" v-for="snippet in snippets" :key="snippet.id">
+    <li class="snippets-list" v-for="snippet in savedSnippets" :key="snippet.id">
       <div class="snippets-list__cell">{{ snippet.title }}</div>
       <div class="snippets-list__cell">
         <RenderizedSnippet :language="snippet.language" :edited="snippet.snippet" />
@@ -15,10 +15,15 @@
 </template>
 
 <script setup lang="ts">
-import { useSnippet } from "@/lib/supabase/snippets-handler-composable";
-import RenderizedSnippet from "./RenderizedSnippet.vue";
 import { onMounted } from "vue";
-const { readSnippets, snippets } = useSnippet();
+import { storeToRefs } from "pinia";
+import { useSnippet } from "@/lib/supabase/snippets-handler-composable";
+import { savedSnippetStore } from "@/store/snippet/saved";
+import RenderizedSnippet from "./RenderizedSnippet.vue";
+const savedStore = savedSnippetStore();
+const { savedSnippets } = storeToRefs(savedStore);
+
+const { readSnippets } = useSnippet();
 
 type Snippet = {
   id: number;
@@ -63,5 +68,3 @@ onMounted(async () => readSnippets());
   }
 }
 </style>
-id: number created_at: string snippet: string title: string, tags: string, user_id:
-string, language: string

@@ -1,17 +1,18 @@
 import { supabase } from '../supabaseClient'
-import { snippetStore } from '@/store/snippet'
+import { editedSnippetStore } from '@/store/snippet/edited'
+import { savedSnippetStore } from '@/store/snippet/saved'
 import { storeToRefs } from 'pinia'
-const store = snippetStore()
+const editedStore = editedSnippetStore()
+const savedStore = savedSnippetStore()
 import { inputsStore } from '@/store/inputs'
 const storeInputs = inputsStore()
-const { snippet, language, tags, title } = storeToRefs(store)
+const { snippet, language, tags, title } = storeToRefs(editedStore)
 const languageInput = storeToRefs(storeInputs).language
 const titleInput = storeToRefs(storeInputs).title
 const tagsInput = storeToRefs(storeInputs).tags
 import { tryCatchError } from '@/modules/ErrorHandler/typeError'
-import { ref } from 'vue'
 
-type Snippet = {
+interface Snippet {
     id: number
     created_at: string
     snippet: string
@@ -20,8 +21,6 @@ type Snippet = {
     user_id: string
     language: string
 }
-
-const snippets = ref<Snippet[] | null>([])
 
 export function useSnippet() {
     const createSnippet = async () => {
@@ -48,9 +47,9 @@ export function useSnippet() {
         if (titleInput.value !== null)
             try {
                 languageInput.value !== null &&
-                    store.addLanguage(languageInput.value)
-                tagsInput.value !== null && store.addTags(tagsInput.value)
-                store.addTitle(titleInput.value)
+                    editedStore.addLanguage(languageInput.value)
+                tagsInput.value !== null && editedStore.addTags(tagsInput.value)
+                editedStore.addTitle(titleInput.value)
                 await createSnippet()
             } catch (e: unknown) {
                 tryCatchError(e)
@@ -64,7 +63,8 @@ export function useSnippet() {
             }
             const { data, error } = await supabase.from('snippets').select()
             if (error) throw error
-            snippets.value = data
+            const res = data as Snippet[]
+            savedStore.addSnippet(res)
         } catch (e: unknown) {
             tryCatchError(e)
         }
@@ -75,6 +75,5 @@ export function useSnippet() {
         titleInput,
         tagsInput,
         readSnippets,
-        snippets,
     }
 }
