@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onBeforeMount } from "vue";
 import { storeToRefs } from "pinia";
 import { savedSnippetStore } from "@/store/snippet/saved";
 import RenderizedSnippet from "./RenderizedSnippet.vue";
@@ -39,7 +39,7 @@ function getTags(snippet: Snippet) {
   return snippet.tags.split(",");
 }
 
-onMounted(async () => readSnippetsFn());
+onBeforeMount(async () => await readSnippetsFn());
 </script>
 
 <style lang="scss" scoped>

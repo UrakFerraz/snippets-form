@@ -42,25 +42,29 @@ const createSnippet = async (snippet: EditedSnippet) => {
 const saveSnippet = async (snippet: EditedSnippet, callbackFn: () => void) => {
     try {
         await callbackFn()
-        await createSnippet(snippet)
     } catch (e: unknown) {
         tryCatchError(e)
     }
 }
 
-const readSnippets = async (callbackFn: (snippet: SavedSnippet[]) => void) => {
-    try {
-        const _user = supabase.auth.user()
-        if (_user === null) {
-            throw new Error('========== supabase.user === null ==========')
+const readSnippets = async (
+    callbackFn: (snippet: SavedSnippet[]) => void,
+    isLoaded: boolean
+) => {
+    if (!isLoaded)
+        try {
+            console.log('entrou')
+            const _user = supabase.auth.user()
+            if (_user === null) {
+                throw new Error('========== supabase.user === null ==========')
+            }
+            const { data, error } = await supabase.from('snippets').select()
+            if (error) throw error
+            const res = data as SavedSnippet[]
+            callbackFn(res)
+        } catch (e: unknown) {
+            tryCatchError(e)
         }
-        const { data, error } = await supabase.from('snippets').select()
-        if (error) throw error
-        const res = data as SavedSnippet[]
-        callbackFn(res)
-    } catch (e: unknown) {
-        tryCatchError(e)
-    }
 }
 
 export { createSnippet, saveSnippet, readSnippets }

@@ -42,6 +42,7 @@ export function useSnippet() {
             }
     }
     const saveSnippetFn = async () => {
+        savedStore.setIsLoaded(false)
         return await saveSnippet(
             {
                 snippet: snippet.value,
@@ -54,7 +55,10 @@ export function useSnippet() {
     }
     const readSnippetsFn = async () => {
         editedStore.setIsSaved(false)
-        return await readSnippets(savedStore.addSnippet)
+        return await readSnippets(
+            savedStore.addSnippet,
+            savedStore.mainIsLoadedState
+        )
     }
     return {
         saveSnippet,
