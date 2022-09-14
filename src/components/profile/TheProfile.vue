@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { supabase } from "@/lib/supabaseClient";
-import { tryCatchError } from "@/modules/ErrorHandler/typeError";
+import { tryCatchError, typeError } from "@/modules/ErrorHandler/typeError";
 import { userStore } from "@/store/user";
 import { inputsStore } from "@/store/inputs";
 import { onMounted, ref } from "vue";
@@ -47,7 +47,7 @@ async function getProfile() {
     store.setLoading(true);
     const _user = supabase.auth.user();
     if (_user === null || store.session === null || store.session.user === null) {
-      throw new Error("========== store.user === null ==========");
+      return typeError("store.user === null");
     }
     store.session.user = _user;
     let { data, error, status } = await supabase
@@ -75,11 +75,11 @@ async function updateProfile() {
     store.setLoading(true);
     const _user = supabase.auth.user();
     if (_user === null || store.session === null || store.session.user === null) {
-      throw new Error("========== store.user === null ==========");
+      return typeError("store.user === null");
     }
     store.session.user = _user;
     if (store.session.user === null) {
-      throw new Error("========== store.user === null ==========");
+      return typeError("store.user === null");
     }
     const updates = {
       id: store.session.user.id,

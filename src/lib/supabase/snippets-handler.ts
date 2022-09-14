@@ -1,5 +1,5 @@
 import { supabase } from '../supabaseClient'
-import { tryCatchError } from '@/modules/ErrorHandler/typeError'
+import { tryCatchError, typeError } from '@/modules/ErrorHandler/typeError'
 
 interface SavedSnippet {
     id: number
@@ -22,7 +22,7 @@ const createSnippet = async (snippet: EditedSnippet) => {
     try {
         const _user = supabase.auth.user()
         if (_user === null) {
-            throw new Error('========== supabase.user === null ==========')
+            return typeError('supabase.user === null')
         }
         const { error } = await supabase.from('snippets').insert([
             {
@@ -56,7 +56,7 @@ const readSnippets = async (
             console.log('entrou')
             const _user = supabase.auth.user()
             if (_user === null) {
-                throw new Error('========== supabase.user === null ==========')
+                return typeError('supabase.user === null')
             }
             const { data, error } = await supabase.from('snippets').select()
             if (error) throw error

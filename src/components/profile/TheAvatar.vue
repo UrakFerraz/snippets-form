@@ -53,10 +53,7 @@ const downloadAvatar = async (path: string | undefined) => {
 
 async function uploadAvatar(event: Event) {
   const target = event.target as HTMLInputElement;
-  if (target == null)
-    return typeError(
-      "======================= event target null ======================= "
-    );
+  if (target == null) return typeError("event target null");
   const files = target.files as FileList;
   // eslint-disable-next-line no-debugger
   // debugger

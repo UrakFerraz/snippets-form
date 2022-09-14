@@ -2,11 +2,11 @@ function typeError(message: string): Error {
     throw new Error(`==============${message}==============`)
 }
 
-function tryCatchError(e: unknown) {
+function tryCatchError(e: unknown): string | undefined {
     if (typeof e === 'string') {
-        e.toUpperCase()
+        return e.toUpperCase()
     } else if (e instanceof Error) {
-        e.message
+        return e.message
     }
 }
 
