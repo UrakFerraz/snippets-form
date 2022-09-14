@@ -16,6 +16,7 @@ interface editedSnippetState {
     edited: string
     title: string
     tags: string
+    isSaved?: boolean
 }
 
 export const editedSnippetStore = defineStore('edited-snippet', {
@@ -26,6 +27,7 @@ export const editedSnippetStore = defineStore('edited-snippet', {
             language: defaultValues.language,
             tags: defaultValues.tags,
             edited: defaultValues.edited,
+            isSaved: false,
         }
     },
     // could also be defined as
@@ -64,12 +66,16 @@ export const editedSnippetStore = defineStore('edited-snippet', {
         addTitle(payload: string) {
             this.title = payload
         },
+        setIsSaved(payload: boolean) {
+            this.isSaved = payload
+        },
         resetSnippet() {
             this.title = defaultValues.title
             this.snippet = defaultValues.snippet
             this.language = defaultValues.language
             this.tags = defaultValues.tags
             this.edited = defaultValues.edited
+            this.isSaved = false
         },
     },
 })

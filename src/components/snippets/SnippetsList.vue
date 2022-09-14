@@ -17,13 +17,13 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { useSnippet } from "@/lib/supabase/snippets-handler-composable";
 import { savedSnippetStore } from "@/store/snippet/saved";
 import RenderizedSnippet from "./RenderizedSnippet.vue";
+import { useSnippet } from "@/composables/snippets-handler-composable";
 const savedStore = savedSnippetStore();
 const { savedSnippets } = storeToRefs(savedStore);
 
-const { readSnippets } = useSnippet();
+const { readSnippetsFn } = useSnippet();
 
 type Snippet = {
   id: number;
@@ -39,7 +39,7 @@ function getTags(snippet: Snippet) {
   return snippet.tags.split(",");
 }
 
-onMounted(async () => readSnippets());
+onMounted(async () => readSnippetsFn());
 </script>
 
 <style lang="scss" scoped>
