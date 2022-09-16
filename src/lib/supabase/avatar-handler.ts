@@ -48,6 +48,8 @@ const downloadImage = async (
         .from('avatars')
         .download(path)
     if (error) throw error
+    console.log(data)
+
     avatarUrl.value = URL.createObjectURL(data as Blob)
 }
 

@@ -53,11 +53,6 @@ const readSnippets = async (
 ) => {
     if (!isLoaded)
         try {
-            console.log('entrou')
-            const _user = supabase.auth.user()
-            if (_user === null) {
-                return typeError('supabase.user === null')
-            }
             const { data, error } = await supabase.from('snippets').select()
             if (error) throw error
             const res = data as SavedSnippet[]

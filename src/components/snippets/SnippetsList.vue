@@ -22,7 +22,6 @@ import RenderizedSnippet from "./RenderizedSnippet.vue";
 import { useSnippet } from "@/composables/snippets-handler-composable";
 const savedStore = savedSnippetStore();
 const { savedSnippets } = storeToRefs(savedStore);
-
 const { readSnippetsFn } = useSnippet();
 
 type Snippet = {

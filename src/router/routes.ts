@@ -53,7 +53,9 @@ const routes: Array<RouteRecordRaw> = [
         path: '/snippets-list',
         name: 'snippets-list',
         component: () =>
-            import(/* webpackChunkName: "profile" */ '../views/SnippetsList.vue'),
+            import(
+                /* webpackChunkName: "profile" */ '../views/SnippetsList.vue'
+            ),
     },
 ]
 
