@@ -7,7 +7,6 @@ import { inputsStore } from '@/store/inputs'
 const storeInputs = inputsStore()
 const store = userStore()
 const { username, website } = storeToRefs(storeInputs)
-const { avatarURL } = storeToRefs(store)
 type Props = Readonly<{ session: Session | null }>
 
 export function useProfile(props: Props | null) {
@@ -24,14 +23,14 @@ export function useProfile(props: Props | null) {
 
             if (user === null) return typeError('user === null')
 
-            console.log('avatar_url.value',avatarURL.value);
+            console.log('avatar_url.value', store.avatarURL);
 
 
             const updates = {
                 id: user.id,
                 username: username.value,
                 website: website.value,
-                avatar_url: avatarURL.value,
+                avatar_url: store.avatarURL,
                 updated_at: new Date(),
             }
 
@@ -52,22 +51,21 @@ export function useProfile(props: Props | null) {
     const getProfile = async () => {
         try {
             store.setLoading(true)
+
             if (props === null || props.session === null || props.session.user === null) return typeError('session.user === undefined')
+            if (store === null || store.getUser === null || store.getUser.user === null) return typeError('store.user === undefined')
 
             store.setUser(props.session.user)
 
             const { data, error, status } = await supabase
                 .from('profiles')
                 .select(`username, website, avatar_url`)
-                .eq('id', store.getUserId)
+                .eq('id', store.getUser.user.id)
                 .single()
 
             if (error && status !== 406) {
                 throw error
             }
-
-            console.log('data', data);
-
 
             if (data) {
                 storeInputs.setUsername(data.username)

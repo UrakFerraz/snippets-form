@@ -13,10 +13,16 @@ import account from "@/components/auth/TheAccount.vue";
 import auth from "@/components/auth/TheAuth.vue";
 import { supabase } from "@/lib/supabaseClient";
 import { Session } from "@supabase/supabase-js";
-
+import { userStore } from "@/store/user";
+import { typeError } from "@/modules/ErrorHandler/typeError";
+const store = userStore();
 const session = ref<Session | null>(null);
-onMounted(() => {
-  session.value = supabase.auth.session();
+
+onMounted(async () => {
+  const loggedSession = supabase.auth.session();
+  if (loggedSession == null) return typeError("event target null");
+  session.value = loggedSession;
+  store.setSession(loggedSession);
   supabase.auth.onAuthStateChange(() => {
     session.value = supabase.auth.session();
     console.log(session.value);

@@ -1,6 +1,6 @@
 import { Session, User } from '@supabase/supabase-js'
 import { defineStore } from 'pinia'
-
+import avatarFallback from '@/assets/avatar-fallback'
 type AuthUserState = {
     session: Session | null
     avatarURL: string
@@ -13,7 +13,7 @@ export const userStore = defineStore('user', {
     state: (): AuthUserState => {
         return {
             session: null,
-            avatarURL: '../assets/no_image_available.jpeg',
+            avatarURL: avatarFallback,
             loading: false,
             password: '',
             avatarIsUploaded: false
@@ -21,7 +21,6 @@ export const userStore = defineStore('user', {
     },
     getters: {
         getUser: (state) => state.session,
-        getUserId: (state) => state.session?.user?.id,
         getAvatarURL: (state) => state.avatarURL,
         avatarIsUploaded: (state) => state.avatarIsUploaded,
     },

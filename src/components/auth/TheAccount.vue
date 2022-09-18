@@ -1,7 +1,7 @@
 <template>
   <div class="profile-form">
     <h1 class="profile-form__header">Supabase + Vue.js: Account</h1>
-    <Avatar @onUpload="handleImageUpload" />
+    <Avatar />
     <ProfileForm
       :session="session"
       @onUpdateProfile="updateProfile()"
@@ -16,12 +16,9 @@ import Avatar from "@/components/profile/TheAvatar.vue";
 import ProfileForm from "@/components/profile/ProfileForm.vue";
 import { useProfile } from "@/lib/supabase/profile-handler-composable";
 import { Session } from "@supabase/supabase-js";
-
 const props = defineProps<{ session: Session | null }>();
 
-const { getProfile, handleImageUpload, profileSignOut, updateProfile } = useProfile(
-  props
-);
+const { getProfile, profileSignOut, updateProfile } = useProfile(props);
 
 onMounted(() => {
   return getProfile();
