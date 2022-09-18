@@ -6,6 +6,7 @@ type AuthUserState = {
     avatarURL: string
     loading: boolean
     password: string
+    avatarIsUploaded: boolean
 }
 
 export const userStore = defineStore('user', {
@@ -15,15 +16,21 @@ export const userStore = defineStore('user', {
             avatarURL: '../assets/no_image_available.jpeg',
             loading: false,
             password: '',
+            avatarIsUploaded: false
         }
     },
     getters: {
         getUser: (state) => state.session,
+        getUserId: (state) => state.session?.user?.id,
         getAvatarURL: (state) => state.avatarURL,
+        avatarIsUploaded: (state) => state.avatarIsUploaded,
     },
     actions: {
         setAvatarURL(url: string) {
             this.avatarURL = url
+        },
+        setAvatarIsUploaded(isLoaded: boolean) {
+            this.avatarIsUploaded = isLoaded
         },
         setSession(session: Session) {
             this.session = session

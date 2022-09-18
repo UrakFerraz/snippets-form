@@ -1,7 +1,7 @@
 <template>
   <div class="avatar">
     <div class="avatar__frame">
-      <img :src="avatarRendered" alt="Avatar" class="avatar__frame--image" />
+      <img :src="avatarPublicURL" alt="Avatar" class="avatar__frame--image" />
     </div>
     <div class="avatar__input-upload">
       <input
@@ -9,7 +9,7 @@
         id="single"
         accept="image/*"
         class="avatar__input-upload--cta"
-        @change="uploadAvatar"
+        @change="uploadAvatarFn"
         :disabled="uploading"
       />
       <label class="avatar__input-upload--label" htmlFor="single">
@@ -20,51 +20,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed, Ref, ref, watch } from "@vue/runtime-core";
-import { tryCatchError, typeError } from "@/modules/ErrorHandler/typeError";
-import {
-  fileUploader,
-  fileReaderFactory,
-  downloadImage,
-} from "@/lib/supabase/avatar-handler";
-const props = defineProps({ url: String });
-
-const avatarUrl: Ref<string | undefined> = ref(
-  "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
-);
+import { computed, ref } from "@vue/runtime-core";
+import { tryCatchError } from "@/modules/ErrorHandler/typeError";
+import { storeToRefs } from "pinia";
+import useAvatar from "@/composables/avatar-handler-composable";
+import { userStore } from "@/store/user";
+const store = userStore();
+const { uploadAvatar } = useAvatar();
+const { avatarURL } = storeToRefs(store);
 const uploading = ref(false);
 
-watch(
-  () => props.url,
-  (cur) => {
-    downloadAvatar(cur);
-  }
-);
-
-const emit = defineEmits(["onUpload"]);
-
-const avatarRendered = computed(() => {
-  return avatarUrl.value;
+const avatarPublicURL = computed(() => {
+  return `${process.env.VUE_APP_SUPABASE_URL}/storage/v1/object/public/avatars/${avatarURL.value}`;
 });
 
-const downloadAvatar = async (path: string | undefined) => {
-  await downloadImage(path, avatarUrl);
-};
-
-async function uploadAvatar(event: Event) {
-  const target = event.target as HTMLInputElement;
-  if (target == null) return typeError("event target null");
-  const files = target.files as FileList;
+async function uploadAvatarFn(event: Event) {
   // eslint-disable-next-line no-debugger
   // debugger
   try {
     uploading.value = true;
-
-    const avatar = fileReaderFactory(files);
-
-    fileUploader(files);
-
-    emit("onUpload", avatar.filePath);
+    uploadAvatar(event);
   } catch (e: unknown) {
     tryCatchError(e);
   } finally {
